@@ -1,8 +1,10 @@
 from django.urls import path
 
-from .views import TodoList
+from .views import TodoList, TodoAPIView
 
 urlpatterns = [
-    path('', TodoList.as_view()),
+    path('list', TodoList.as_view()),
+    path('', TodoAPIView.as_view()),
+
     #path('detail/<str:id>/', BlogDetailView.as_view(), name='blog_detail' )
 ]
