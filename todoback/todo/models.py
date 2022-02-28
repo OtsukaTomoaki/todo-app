@@ -25,35 +25,24 @@ class Todo(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     title = models.CharField('タイトル', max_length=128)
     memo = models.TextField('メモ', blank=True)
+    #todo: created_by, engaged_user_idはuuidにする
     created_by = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name='作成者', on_delete=models.CASCADE)
+    engaged_user_id = models.IntegerField('担当者', blank=True)
     created_at = models.DateTimeField('作成日', auto_now_add=True)
     updated_at = models.DateTimeField('更新日', auto_now=True)
     state = models.CharField(max_length=10, choices=TodoStatus.choices())
+    days_required = models.IntegerField()
+    start_date = models.DateTimeField('開始日')
+    end_date = models.DateTimeField('終了日')
     class Meta:
         db_table = 'todo'
 
     def __str__(self):
         return f'{self.pk} {self.title}'
 
-class TodoHistories(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    todo = models.ForeignKey(Todo, on_delete=models.CASCADE)
-    days_required = models.IntegerField()
-    memo = models.TextField('メモ', blank=True)
-    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name='作成者', on_delete=models.CASCADE)
-    created_at = models.DateTimeField('作成日', auto_now_add=True)
-    updated_at = models.DateTimeField('更新日', auto_now=True)
-    start_date = models.DateTimeField('開始日', auto_now=True)
-    end_date = models.DateTimeField('終了日', auto_now=True)
-    class Meta:
-        db_table = 'todo_histories'
-
-    def __str__(self):
-        return f'{self.pk} {self.memo}'
-
 class TodoComments(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    commented_to = models.ForeignKey(TodoHistories, on_delete=models.CASCADE)
+    commented_to = models.ForeignKey(Todo, on_delete=models.CASCADE)
     text = models.TextField('本文', blank=False)
     commented_at = models.DateTimeField('投稿日', auto_now_add=True)
     commented_by = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name='投稿者', on_delete=models.CASCADE)
