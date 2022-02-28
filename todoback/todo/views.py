@@ -40,10 +40,10 @@ class TodoAPIView(APIView):
 
         UserModel = get_user_model()
         user = UserModel.objects.get(username=request.user)  
-        serializer = TodoSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save(created_by=user)
+        todo_serializer = TodoSerializer(data=request.data)
+        if todo_serializer.is_valid():
+            todo_serializer.save(created_by=user, state='PARKING')
 
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            return Response(todo_serializer.data, status=status.HTTP_201_CREATED)
+        return Response(todo_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 

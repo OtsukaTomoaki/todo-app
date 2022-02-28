@@ -24,6 +24,7 @@ class Migration(migrations.Migration):
                 ('created_at', models.DateTimeField(auto_now_add=True, verbose_name='作成日')),
                 ('updated_at', models.DateTimeField(auto_now=True, verbose_name='更新日')),
                 ('created_by', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL, verbose_name='作成者')),
+                ('state', models.CharField(choices=[('PARKING', 'PARKING'), ('TODO', 'TODO'), ('DOING', 'DOING'), ('DONE', 'DONE')], max_length=10)),
             ],
             options={
                 'db_table': 'todo',
@@ -39,7 +40,6 @@ class Migration(migrations.Migration):
                 ('updated_at', models.DateTimeField(auto_now=True, verbose_name='更新日')),
                 ('start_date', models.DateTimeField(auto_now=True, verbose_name='開始日')),
                 ('end_date', models.DateTimeField(auto_now=True, verbose_name='終了日')),
-                ('state', models.CharField(choices=[('PARKING', 'PARKING'), ('TODO', 'TODO'), ('DOING', 'DOING'), ('DONE', 'DONE')], max_length=10)),
                 ('created_by', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL, verbose_name='作成者')),
                 ('todo', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='todo.todo')),
             ],

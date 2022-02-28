@@ -28,6 +28,7 @@ class Todo(models.Model):
     created_by = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name='作成者', on_delete=models.CASCADE)
     created_at = models.DateTimeField('作成日', auto_now_add=True)
     updated_at = models.DateTimeField('更新日', auto_now=True)
+    state = models.CharField(max_length=10, choices=TodoStatus.choices())
     class Meta:
         db_table = 'todo'
 
@@ -44,7 +45,6 @@ class TodoHistories(models.Model):
     updated_at = models.DateTimeField('更新日', auto_now=True)
     start_date = models.DateTimeField('開始日', auto_now=True)
     end_date = models.DateTimeField('終了日', auto_now=True)
-    state = models.CharField(max_length=10, choices=TodoStatus.choices())
     class Meta:
         db_table = 'todo_histories'
 
