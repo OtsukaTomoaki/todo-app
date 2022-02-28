@@ -48,10 +48,17 @@ class TodoAPIView(APIView):
         todo = get_object_or_404(Todo, pk=id)
         serializer = TodoSerializer(todo)
         return Response(serializer.data)
-    
+
+    def put(self, request, id):
+        todo = get_object_or_404(Todo, pk=id)
+        todo_serializer = TodoSerializer(data=request.data, instance=todo)
+        if todo_serializer.is_valid():
+            todo_serializer.save()
+            return Response(todo_serializer.data, status=status.HTTP_201_CREATED)
+        return Response(todo_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     def delete(self, request, id, format=None):
-        record = Todo.objects.get(id = id)
-        record.delete()
+        todo = get_object_or_404(Todo, pk=id)
+        todo.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
