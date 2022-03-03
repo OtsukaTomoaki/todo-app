@@ -1,7 +1,7 @@
 import axios from "axios";
+import { setTokenToLocalStorage, setCookie } from "../common/webStorage"
 
 const authUrl = 'http://127.0.0.1:8000/api/accounts'
-const tokenKey = 'todoToken';
 
 //アクセストークンの取得
 export const fetchToken = async (username, password) => {
@@ -9,10 +9,16 @@ export const fetchToken = async (username, password) => {
     params.append('username', username);
     params.append('password', password);
 
-    const response = await axios.post(authUrl + '/token', params);
-    console.log(response.data);
-    localStorage.setItem(tokenKey, response.data);
-    return response.data;
+    const success = axios.post(authUrl + '/token', params).then((response) => {
+        const token = response.data['token'];
+        setTokenToLocalStorage(token);
+        //setCookie(tokenKey, tokenKey, 7)
+        return true;
+    }).catch((err) => {
+        console.warn(err);
+        return false;
+    });
+    return await success;
 };
 
 //export const diagnosticsToken

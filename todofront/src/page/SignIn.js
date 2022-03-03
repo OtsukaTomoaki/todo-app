@@ -1,17 +1,23 @@
 import React, { useState, useEffect, useRef }  from "react";
 import { fetchToken } from "../apis/auth";
+import { useNavigate } from 'react-router-dom';
 
-export const SignIn = () => {
+
+export const SignIn = ({ nextUrl }) => {
     const userNameRef = useRef(null);
     const passwordRef = useRef(null);
+    const navigate = useNavigate();
 
-    const handleClick = () => {
+    const handleClick = async () => {
         const userName = userNameRef.current.value;
         const password = passwordRef.current.value;
-        console.log(userNameRef.current.value)
-        const response = fetchToken(userName, password);
+        const success = await fetchToken(userName, password);
+        if (success) {
+            console.log(nextUrl);
+            navigate(nextUrl);
+        } else {
 
-        console.log(response);
+        }
     }
     return (
         <>
@@ -21,7 +27,7 @@ export const SignIn = () => {
             </div>
             <div>
                 <label>パスワード</label>
-                <input type="text" ref={passwordRef}/>
+                <input type="password" ref={passwordRef}/>
             </div>
 
             <input type="button" value="更新" onClick={handleClick} />

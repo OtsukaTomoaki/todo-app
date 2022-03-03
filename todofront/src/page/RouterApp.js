@@ -6,9 +6,9 @@ export const RouterApp = () => {
     return (
         <BrowserRouter>
             <Routes>
-                <Route exact path="/" element={<SignIn />} />
+                <Route exact path="/" element={<SignIn nextUrl="/home"/>} />
 
-                {/* <Route exact path="/" element={<Home />} /> */}
+                <Route exact path="/home" element={<Home />} />
             </Routes>
         </BrowserRouter>
     );
