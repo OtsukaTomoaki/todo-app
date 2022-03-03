@@ -39,12 +39,14 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # 'django_extensions',
     'rest_framework',
+    'corsheaders',
     'accounts.apps.AccountsConfig',
     'todo.apps.TodoConfig',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'corsheaders.middleware.CorsMiddleware',  # Django CORS Headers
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -129,6 +131,13 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# django-cors-headers
+CORS_ORIGIN_WHITELIST = [
+    "http://localhost:3000",
+]
+if DEBUG is True:
+    CORS_ALLOW_ALL_ORIGINS = True
 
 LOGGING = {
     'version': 1,
