@@ -25,18 +25,6 @@ export const Calendar = ({ events }) => {
                 }}
                 locale="ja"
                 events={events}
-                // events={[
-                //     {
-                //         title: 'Business Lunch',
-                //         description: 'foo bare',
-                //         start: '2022-03-03T13:00:00',
-                //         end: "2022-03-04T13:00:00",
-                //         backgroundColor: "red",
-                //         borderColor: "red",
-                //         editable: true
-                //         // constraint: 'businessHours'
-                //     }
-                // ]}
             />
         </>
     );
