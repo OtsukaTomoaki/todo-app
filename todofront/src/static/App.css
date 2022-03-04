@@ -36,3 +36,10 @@
     transform: rotate(360deg);
   }
 }
+
+td.fc-day-sat {
+  background-color: #eaf4ff;
+}
+td.fc-day-sun {
+  background-color: #eaf4ff;
+}

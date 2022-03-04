@@ -1,11 +1,11 @@
 import React from "react";
+import { Calendar } from "../components/Calendar";
 
-export const Home = () => {
+export const Home = ({ events, accounts }) => {
+
     return (
         <>
-        <div>
-            hoge
-        </div>
+            <Calendar events={events}/>
         </>
     );
 };

@@ -1,12 +1,12 @@
 import axios from "axios";
 import { getTokenFromLocalStorage } from '../common/webStorage'
 
-const API_BASEURL = 'http://localhost:3100/todos';
+const API_BASEURL = 'http://127.0.0.1:8000/api/todo';
 
-const API_TOKEN = `bearer ${getTokenFromLocalStorage()}`
+const API_TOKEN = `bearer ${getTokenFromLocalStorage()}`;
 
 axios.defaults.baseURL = API_BASEURL;
-axios.defaults.headers.common["Authorization"] = `bearer ${API_TOKEN}`;
+axios.defaults.headers.common["Authorization"] = API_TOKEN;
 
 export const getAllTodoData = async () => {
     const response = await axios.get(API_BASEURL);
