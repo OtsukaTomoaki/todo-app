@@ -7,6 +7,7 @@ import { SignIn } from './SignIn';
 import '../static/App.css';
 import { useTodo } from "../hooks/useTodo";
 import { useAccounts } from '../hooks/useAccounts';
+import { BugerMenu } from '../components/BurgerMenu';
 
 const RouterApp = () => {
     const {
@@ -28,14 +29,29 @@ const RouterApp = () => {
         }
     });
     const { accountList } = useAccounts();
+    const accounts = accountList.map((v) => {
+        return {
+            id: v.id,
+            item: v.username
+        };
+    });
+    const multiCheckValues = [
+        { id: 1, item: "フロントエンド" },
+        { id: 2, item: "バックエンド" },
+        { id: 3, item: "ネイティブ" }
+    ];
     return (
-        <BrowserRouter>
-            <Routes>
-                <Route exact path="/" element={<SignIn nextUrl="/home" />} />
+        <>
+            <BugerMenu />
+            <BrowserRouter>
+                <Routes>
+                    <Route exact path="/" element={<SignIn nextUrl="/home" />} />
 
-                <Route exact path="/home" element={<Home events={{events}} accounts={accountList} />} />
-            </Routes>
-        </BrowserRouter>
+                    <Route exact path="/home" element={<Home events={{ events }} accounts={accounts} />} />
+                </Routes>
+            </BrowserRouter>
+        </>
+
     );
 };
 
