@@ -1,5 +1,5 @@
+import React, { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route, Switch } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
 
 import { Home } from './Home';
 import { SignIn } from './SignIn';
@@ -8,6 +8,7 @@ import '../static/App.css';
 import { useTodo } from "../hooks/useTodo";
 import { useAccounts } from '../hooks/useAccounts';
 import { BugerMenu } from '../components/BurgerMenu';
+import { InputMultiCheckBox } from '../components/MultiCheckBox';
 
 const RouterApp = () => {
     const {
@@ -16,7 +17,7 @@ const RouterApp = () => {
         toggleTodoListItemStatus,
         deleteTodoListItem
     } = useTodo();
-    const events = todoList.map((v) => {
+    let events = todoList.map((v) => {
         return {
             id: v.id,
             title: v.title,
@@ -28,21 +29,34 @@ const RouterApp = () => {
             editable: true
         }
     });
-    const { accountList } = useAccounts();
+
+    const { accountList, setAccountList } = useAccounts();
     const accounts = accountList.map((v) => {
         return {
             id: v.id,
             item: v.username
         };
     });
-    const multiCheckValues = [
-        { id: 1, item: "フロントエンド" },
-        { id: 2, item: "バックエンド" },
-        { id: 3, item: "ネイティブ" }
-    ];
+
+    const checkItem = (id) => {
+        const findAccount = accountList.find((account) => id === account.id);
+        return findAccount.selected;
+    }
+
+    const handleChange = (e) => {
+        const newAccounts = accountList.map((account) => {
+            if(account.username === e.target.value){
+                account['selected'] = e.target.checked;
+            }
+            return account;
+        })
+        setAccountList([...newAccounts]);
+    };
+
+    const accountsBugerItem = <InputMultiCheckBox multiCheckValues={accounts} checkedValues={checkItem} handleChange={handleChange}/>;
     return (
         <>
-            <BugerMenu />
+            <BugerMenu items={[accountsBugerItem]}/>
             <BrowserRouter>
                 <Routes>
                     <Route exact path="/" element={<SignIn nextUrl="/home" />} />
@@ -51,10 +65,8 @@ const RouterApp = () => {
                 </Routes>
             </BrowserRouter>
         </>
-
     );
 };
-
 
 function App() {
     return (

@@ -8,9 +8,13 @@ export const useAccounts = () => {
     //全て取得
     useEffect(() => {
         accountsData.getAllAccountsData().then((response) => {
-            setAccountList(response);
+            const newAccount = response.map((account) => {
+                account['selected'] = true;
+                return account;
+            })
+            setAccountList(newAccount);
         });
     }, []);
 
-    return { accountList };
+    return { accountList, setAccountList };
 };

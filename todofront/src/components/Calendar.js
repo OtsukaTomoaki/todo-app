@@ -5,8 +5,6 @@ import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 
 export const Calendar = ({ events }) => {
-    console.log(events);
-
     return (
         <>
             <FullCalendar
@@ -16,6 +14,9 @@ export const Calendar = ({ events }) => {
                     left: 'prev,next',
                     center: 'title',
                     right: 'dayGridMonth,timeGridWeek,timeGridDay',
+                }}
+                footerToolbar= {{
+                    right: "prev,next"
                 }}
                 nowIndicator
                 dateClick={(e) => console.log(e.dateStr)}
