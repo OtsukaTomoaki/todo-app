@@ -25,6 +25,8 @@ export const Calendar = ({ events }) => {
 
                 }}
                 locale="ja"
+                selectable='true'
+                selectHelper='true'
                 events={events}
             />
         </>

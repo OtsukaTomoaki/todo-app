@@ -4,7 +4,6 @@ import * as accountsData from "../apis/accounts";
 
 export const useAccounts = () => {
     const [accountList, setAccountList] = useState([]);
-
     //全て取得
     useEffect(() => {
         accountsData.getAllAccountsData().then((response) => {
@@ -12,7 +11,7 @@ export const useAccounts = () => {
                 account['selected'] = true;
                 return account;
             })
-            setAccountList(newAccount);
+            setAccountList([...newAccount]);
         });
     }, []);
 

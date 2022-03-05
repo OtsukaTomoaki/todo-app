@@ -11,25 +11,6 @@ import { BugerMenu } from '../components/BurgerMenu';
 import { InputMultiCheckBox } from '../components/MultiCheckBox';
 
 const RouterApp = () => {
-    const {
-        todoList,
-        addTodoListItem,
-        toggleTodoListItemStatus,
-        deleteTodoListItem
-    } = useTodo();
-    let events = todoList.map((v) => {
-        return {
-            id: v.id,
-            title: v.title,
-            description: v.memo,
-            start: v.start_date.split('+')[0],
-            end: v.end_date.split('+')[0],
-            backgroundColor: 'red',
-            borderColor: 'red',
-            editable: true
-        }
-    });
-
     const { accountList, setAccountList } = useAccounts();
     //チェックボックス表示用のリストを生成
     const accounts = accountList.map((v) => {
@@ -46,18 +27,48 @@ const RouterApp = () => {
     //チェックされた際にaccountListの更新を行う
     const handleChange = (e) => {
         const newAccounts = accountList.map((account) => {
-            if(account.username === e.target.value){
+            if (account.username === e.target.value) {
                 account['selected'] = e.target.checked;
             }
             return account;
         })
-        setAccountList([...newAccounts]);
+        setAccountList(newAccounts);
     };
+    const accountsBugerItem = <InputMultiCheckBox multiCheckValues={accounts} checkedValues={checkItem} handleChange={handleChange} />;
 
-    const accountsBugerItem = <InputMultiCheckBox multiCheckValues={accounts} checkedValues={checkItem} handleChange={handleChange}/>;
+    //todoの一覧
+    const {
+        todoList,
+        addTodoListItem,
+        toggleTodoListItemStatus,
+        deleteTodoListItem
+    } = useTodo();
+    
+    const [events, setEvents] = useState([]);
+    useEffect(() => {
+        const selectedAccounts = accountList.filter((account) => account.selected)
+        const newEvents = todoList.filter((v) => {
+            //チェック中のユーザのタスクか
+            return selectedAccounts.some((account) => account.id === v.engaged_user_id);
+        }).map((v) => {
+            //カレンダーで読み込める形式にする
+            return {
+                id: v.id,
+                title: v.title,
+                description: v.memo,
+                start: v.start_date.split('+')[0],
+                end: v.end_date.split('+')[0],
+                backgroundColor: 'red',
+                borderColor: 'red',
+                editable: true
+            }
+        });
+        setEvents(newEvents);
+    }, [accountList, todoList]);
+    
     return (
         <>
-            <BugerMenu items={[accountsBugerItem]}/>
+            <BugerMenu items={[accountsBugerItem]} />
             <BrowserRouter>
                 <Routes>
                     <Route exact path="/" element={<SignIn nextUrl="/home" />} />
