@@ -31,18 +31,19 @@ const RouterApp = () => {
     });
 
     const { accountList, setAccountList } = useAccounts();
+    //チェックボックス表示用のリストを生成
     const accounts = accountList.map((v) => {
         return {
             id: v.id,
             item: v.username
         };
     });
-
+    //要素がチェック状態にあるか検索した結果を返す関数
     const checkItem = (id) => {
         const findAccount = accountList.find((account) => id === account.id);
         return findAccount.selected;
     }
-
+    //チェックされた際にaccountListの更新を行う
     const handleChange = (e) => {
         const newAccounts = accountList.map((account) => {
             if(account.username === e.target.value){
