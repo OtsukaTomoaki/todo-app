@@ -174,12 +174,3 @@ export const UpdateTodoForm = ({ accounts, updateTodo, deleteTodo, toggleShow, t
         </form>
     );
 };
-
-function convertDateToStr(date) {
-    const date_str = `${date.getFullYear()}-${padStartWith0(date.getMonth() + 1)}-${padStartWith0(date.getDate())}`;
-    return date_str;
-}
-
-function padStartWith0(number) {
-    return number.toString().padStart(2, '0');
-}

@@ -2,7 +2,6 @@ import Modal from "react-modal";
 Modal.setAppElement("#root");
 
 export const ModalDialog = ({ isShow, toggleShow, form }) => {
-    console.log(form);
     return (
         <Modal
             isOpen={isShow}
