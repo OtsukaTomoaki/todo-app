@@ -24,6 +24,7 @@ export const getTodoData = async (id) => {
 };
 
 export const updateTodoData = async (id, todo) => {
+    console.log(todo);
     const response = await axios.put(`${API_BASEURL}/detail/${id}`, todo);
     return response.data;
 }

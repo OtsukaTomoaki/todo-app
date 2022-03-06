@@ -5,21 +5,7 @@ import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import listPlugin from '@fullcalendar/list';
 
-export const Calendar = ({ events }) => {
-    let clickCnt = 0;
-    let oneClickTimer;
-    const eventsClick = (e) => {
-        clickCnt++;
-        if (clickCnt === 1) {
-            oneClickTimer = setTimeout(function () {
-                clickCnt = 0;
-            }, 400);
-        } else if (clickCnt === 2) {
-            clearTimeout(oneClickTimer);
-            clickCnt = 0;
-            alert(e.event.id);
-        }
-    };
+export const Calendar = ({ events, eventsClickHandler, dateClickHandler }) => {
 
     return (
         <>
@@ -35,8 +21,8 @@ export const Calendar = ({ events }) => {
                     right: "prev,next"
                 }}
                 nowIndicator='true'
-                dateClick={(e) => console.log(e.dateStr)}
-                eventClick={eventsClick}
+                dateClick={dateClickHandler}
+                eventClick={eventsClickHandler}
                 eventDidMount={(e) => {
 
                 }}

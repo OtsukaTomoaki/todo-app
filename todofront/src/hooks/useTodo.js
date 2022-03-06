@@ -14,11 +14,8 @@ export const useTodo = () => {
     }, []);
 
     //ステータス変更
-    const AdvanceTodoListItemStatus = (id, done) => {
-        const todoItem = todoList.find((item) => item.id === id);
-        const newTodoItem = { ...todoItem, state: nextTodo(todoItem.state) };
-
-        todoData.updateTodoData(id, newTodoItem).then((updatedTodo) => {
+    const updateTodoListItem = (id, todoContent) => {
+        todoData.updateTodoData(id, todoContent).then((updatedTodo) => {
             const newTodoList = todoList.map((item) => {
                 return item.id !== updatedTodo.id ? item : updatedTodo;
             });
@@ -43,7 +40,7 @@ export const useTodo = () => {
 
     return {
         todoList,
-        AdvanceTodoListItemStatus,
+        updateTodoListItem,
         addTodoListItem,
         deleteTodoListItem
     };

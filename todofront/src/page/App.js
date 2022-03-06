@@ -40,7 +40,7 @@ const RouterApp = () => {
     const {
         todoList,
         addTodoListItem,
-        toggleTodoListItemStatus,
+        updateTodoListItem,
         deleteTodoListItem
     } = useTodo();
     
@@ -56,8 +56,8 @@ const RouterApp = () => {
                 id: v.id,
                 title: v.title,
                 description: v.memo,
-                start: v.start_date.split('+')[0],
-                end: v.end_date.split('+')[0],
+                start: v.start_date.split('T')[0],
+                end: v.end_date.split('T')[0],
                 backgroundColor: 'red',
                 borderColor: 'red',
                 editable: true
@@ -73,7 +73,7 @@ const RouterApp = () => {
                 <Routes>
                     <Route exact path="/" element={<SignIn nextUrl="/home" />} />
 
-                    <Route exact path="/home" element={<Home events={{ events }} accounts={accountList} todoList={todoList} addTodo={addTodoListItem}/>} />
+                    <Route exact path="/home" element={<Home events={{ events }} accounts={accountList} todoList={todoList} addTodo={addTodoListItem} updateTodo={updateTodoListItem} deleteTodo={deleteTodoListItem}/>} />
                 </Routes>
             </BrowserRouter>
         </>

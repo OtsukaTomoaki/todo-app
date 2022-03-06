@@ -9,24 +9,9 @@ import DateFnsUtils from '@date-io/date-fns'
 import { DatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers'
 import { parseJwt } from "../common/signinUserProvider";
 
-export const TodoForm = ({ todo, accounts, updateTodo, toggleShow }) => {
-    const { userid } = parseJwt();
-    const { control, handleSubmit } = useForm({
-        defaultValues: {
-            title: '',
-            days_required: 1,
-            state: "TODO",
-            engaged_user_id: userid,
-            start_date: convertDateToStr(new Date())
-        },
-    });
-    const onSubmit = (data) => {
-        console.log(data);
-        updateTodo(data);
-        toggleShow(false);
-    };
+const Form = ({ control, accounts }) => {
     return (
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <>
             <Controller
                 control={control}
                 name="title"
@@ -127,6 +112,60 @@ export const TodoForm = ({ todo, accounts, updateTodo, toggleShow }) => {
                     </TextField>
                 )}
             />
+        </>
+    )
+};
+
+export const AddTodoForm = ({ accounts, addTodo, toggleShow, date }) => {
+    const { userid } = parseJwt();
+    console.log(date)
+    const { control, handleSubmit } = useForm({
+        defaultValues: {
+            title: '',
+            days_required: 1,
+            state: "TODO",
+            engaged_user_id: userid,
+            start_date: date
+        },
+    });
+    const onSubmit = (data) => {
+        addTodo(data);
+        toggleShow(false);
+    };
+    return (
+        <form onSubmit={handleSubmit(onSubmit)}>
+            <Form control={control} accounts={accounts}/>
+            <Button
+                variant="contained"
+                color="primary"
+                type="submit"
+            >
+                追加
+            </Button>
+        </form>
+    );
+};
+
+export const UpdateTodoForm = ({ accounts, updateTodo, deleteTodo, toggleShow, todo }) => {
+    console.log(todo);
+    const { control, handleSubmit } = useForm({
+        defaultValues: {
+            id: todo.id,
+            title: todo.title,
+            memo: todo.memo,
+            days_required: todo.days_required,
+            state: todo.state,
+            engaged_user_id: todo.engaged_user_id,
+            start_date: todo.start_date.split('T')[0]
+        },
+    });
+    const onSubmit = (data) => {
+        updateTodo(todo.id, data);
+        toggleShow(false);
+    };
+    return (
+        <form onSubmit={handleSubmit(onSubmit)}>
+            <Form control={control} accounts={accounts}/>
             <Button
                 variant="contained"
                 color="primary"
@@ -144,6 +183,6 @@ function convertDateToStr(date) {
 }
 
 
-function padStartWith0(number){
+function padStartWith0(number) {
     return number.toString().padStart(2, '0');
 }
