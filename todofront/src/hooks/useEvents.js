@@ -1,12 +1,18 @@
 import { useState, useEffect } from "react";
 
-export const useEvents = (accountList, todoList) => {
+export const useEvents = (accountList, todoList, todoStatus) => {
     const [events, setEvents] = useState([]);
     useEffect(() => {
-        const selectedAccounts = accountList.filter((account) => account.selected)
+        const selectedAccounts = accountList.filter((v) => v.selected)
+        const selectedTodoStatus = todoStatus.filter((v) => v.selected)
+        console.log(selectedTodoStatus);
         const newEvents = todoList.filter((v) => {
             //チェック中のユーザのタスクか
-            return selectedAccounts.some((account) => account.id === v.engaged_user_id);
+            return (
+                selectedAccounts.some((account) => account.id === v.engaged_user_id)
+                &&
+                selectedTodoStatus.some((status) => status.id === v.state)
+            );
         }).map((v) => {
             //カレンダーで読み込める形式にする
             const eventColor = selectedAccounts.find((account) => account.id === v.engaged_user_id).color;
@@ -22,6 +28,6 @@ export const useEvents = (accountList, todoList) => {
             }
         });
         setEvents(newEvents);
-    }, [accountList, todoList]);
+    }, [accountList, todoList, todoStatus]);
     return {events, setEvents};
 };

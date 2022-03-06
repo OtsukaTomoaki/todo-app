@@ -9,37 +9,19 @@ import { useTodo } from "../hooks/useTodo";
 import { useAccounts } from '../hooks/useAccounts';
 import { useEvents } from "../hooks/useEvents";
 import { BugerMenu } from '../components/BurgerMenu';
-import { InputMultiCheckBox } from '../components/MultiCheckBox';
+import { AccountMultiCheckBox, TodoStatusMultiCheckBox } from '../components/MultiCheckBox';
 
 import { validateToken, getUserId } from "../common/signinUserProvider";
+import { todoStatus as initialTodoStatus } from "../common/todoStatusProvider";
 
 const RouterApp = () => {
+    //アカウント一覧
     const { accountList, setAccountList } = useAccounts();
+    const accountsBugerItem = AccountMultiCheckBox(accountList, setAccountList);
 
-    //チェックボックス表示用のリストを生成
-    const accounts = accountList.map((v) => {
-        return {
-            id: v.id,
-            item: v.username,
-            color: v.color
-        };
-    });
-    //要素がチェック状態にあるか検索した結果を返す関数
-    const checkItem = (id) => {
-        const findAccount = accountList.find((account) => id === account.id);
-        return findAccount.selected;
-    }
-    //チェックされた際にaccountListの更新を行う
-    const handleChange = (e) => {
-        const newAccounts = accountList.map((account) => {
-            if (account.username === e.target.value) {
-                account['selected'] = e.target.checked;
-            }
-            return account;
-        })
-        setAccountList(newAccounts);
-    };
-    const accountsBugerItem = <InputMultiCheckBox multiCheckValues={accounts} checkedValues={checkItem} handleChange={handleChange} />;
+    //todoのステータス一覧
+    const [todoStatus, setTodoStatus] = useState(initialTodoStatus);
+    const todoStatusBugerItem = TodoStatusMultiCheckBox(todoStatus, setTodoStatus);
 
     //todoの一覧
     const {
@@ -50,11 +32,11 @@ const RouterApp = () => {
     } = useTodo();
 
     //イベントの一覧
-    const { events, setEvents } = useEvents(accountList, todoList);
+    const { events, setEvents } = useEvents(accountList, todoList, todoStatus);
 
     return (
         <>
-            <BugerMenu items={[accountsBugerItem]} />
+            <BugerMenu accountCheckItems={accountsBugerItem} todoStatusCheckItems={todoStatusBugerItem}/>
             <BrowserRouter>
                 <Routes>
                     <Route exact path="/home" element={<Home events={{ events }} accounts={accountList} todoList={todoList} addTodo={addTodoListItem} updateTodo={updateTodoListItem} deleteTodo={deleteTodoListItem} />} />

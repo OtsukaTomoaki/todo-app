@@ -4,7 +4,7 @@ import Button from '@material-ui/core/Button';
 
 import { removeTokenToLocalStorage } from "../common/webStorage";
 
-export const BugerMenu = ({ items, user }) => {
+export const BugerMenu = ({ accountCheckItems, todoStatusCheckItems }) => {
     const handleSignOut = () => {
         removeTokenToLocalStorage();
         window.location.reload();
@@ -15,9 +15,13 @@ export const BugerMenu = ({ items, user }) => {
                 <div>
                     <label>表示するアカウント</label>
                     {
-                        items.map((v, i) => {
-                            return <div key={i}>{v}</div>
-                        })
+                        accountCheckItems
+                    }
+                </div>
+                <div>
+                    <label>表示するTodo</label>
+                    {
+                        todoStatusCheckItems
                     }
                 </div>
                 <Button onClick={handleSignOut} color='primary' type="button" variant="outlined">
