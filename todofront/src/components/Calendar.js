@@ -5,7 +5,7 @@ import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import listPlugin from '@fullcalendar/list';
 
-export const Calendar = ({ events, eventsClickHandler, dateClickHandler }) => {
+export const Calendar = ({ events, setEventsDetail, eventsClickHandler, dateClickHandler }) => {
 
     return (
         <>
@@ -15,7 +15,7 @@ export const Calendar = ({ events, eventsClickHandler, dateClickHandler }) => {
                 headerToolbar={{
                     left: 'prev,next',
                     center: 'title',
-                    right: 'dayGridMonth,listMonth',
+                    right: 'dayGridMonth,listMonth,listDay',
                 }}
                 footerToolbar={{
                     right: "prev,next"
@@ -25,6 +25,9 @@ export const Calendar = ({ events, eventsClickHandler, dateClickHandler }) => {
                 eventClick={eventsClickHandler}
                 eventDidMount={(e) => {
                 }}
+                viewDidMount={((e) => {
+                    setEventsDetail(e.view.type === 'listMonth');
+                })}
                 locale="ja"
                 buttonText= {{
                     prev:     '<',
@@ -35,7 +38,8 @@ export const Calendar = ({ events, eventsClickHandler, dateClickHandler }) => {
                     month:    'カレンダー',
                     week:     '週',
                     day:      '日',
-                    list:     'ToDo一覧'
+                    listMonth: '今月のToDo',
+                    listDay: '今日のToDo'
                 }}
                 selectable={true}
                 selectHelper={true}

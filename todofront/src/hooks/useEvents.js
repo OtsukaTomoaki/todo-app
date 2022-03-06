@@ -1,11 +1,10 @@
 import { useState, useEffect } from "react";
 
-export const useEvents = (accountList, todoList, todoStatus) => {
+export const useEvents = (accountList, todoList, todoStatus, showEventsDetail) => {
     const [events, setEvents] = useState([]);
     useEffect(() => {
         const selectedAccounts = accountList.filter((v) => v.selected)
         const selectedTodoStatus = todoStatus.filter((v) => v.selected)
-        console.log(selectedTodoStatus);
         const newEvents = todoList.filter((v) => {
             //チェック中のユーザのタスクか
             return (
@@ -18,7 +17,7 @@ export const useEvents = (accountList, todoList, todoStatus) => {
             const eventColor = selectedAccounts.find((account) => account.id === v.engaged_user_id).color;
             return {
                 id: v.id,
-                title: v.title,
+                title: showEventsDetail ? generateEventTitleDetail(v, selectedTodoStatus, selectedAccounts) : v.title,
                 description: v.memo,
                 start: v.start_date.split('T')[0],
                 end: v.end_date.split('T')[0],
@@ -28,6 +27,11 @@ export const useEvents = (accountList, todoList, todoStatus) => {
             }
         });
         setEvents(newEvents);
-    }, [accountList, todoList, todoStatus]);
+    }, [accountList, todoList, todoStatus, showEventsDetail]);
     return {events, setEvents};
 };
+
+function generateEventTitleDetail(todo, selectedStatus, selectedAccounts) {
+    const detailTitle = `${todo.title} (${selectedStatus.find((s) => s.id === todo.state).text}) 👤${selectedAccounts.find((account)=>account.id === todo.engaged_user_id).username}`;
+    return detailTitle;
+}

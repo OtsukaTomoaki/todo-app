@@ -31,15 +31,16 @@ const RouterApp = () => {
         deleteTodoListItem
     } = useTodo();
 
+    const [showEventsDetail, setShowEventsDetail] = useState(false);
     //イベントの一覧
-    const { events, setEvents } = useEvents(accountList, todoList, todoStatus);
+    const { events, setEvents } = useEvents(accountList, todoList, todoStatus, showEventsDetail);
 
     return (
         <>
             <BugerMenu accountCheckItems={accountsBugerItem} todoStatusCheckItems={todoStatusBugerItem}/>
             <BrowserRouter>
                 <Routes>
-                    <Route exact path="/home" element={<Home events={{ events }} accounts={accountList} todoList={todoList} addTodo={addTodoListItem} updateTodo={updateTodoListItem} deleteTodo={deleteTodoListItem} />} />
+                    <Route exact path="/home" element={<Home events={{ events }} setEventsDetail={setShowEventsDetail} accounts={accountList} todoList={todoList} addTodo={addTodoListItem} updateTodo={updateTodoListItem} deleteTodo={deleteTodoListItem} />} />
                 </Routes>
             </BrowserRouter>
         </>

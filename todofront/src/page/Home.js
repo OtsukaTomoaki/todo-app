@@ -4,7 +4,7 @@ import { ModalDialog } from "../components/ModalDialog";
 import { AddTodoForm, UpdateTodoForm } from "../components/TodoForm";
 import { generateClickHandler } from "../common/clickHandler";
 
-export const Home = ({ events, accounts, todoList, addTodo, updateTodo, deleteTodo}) => {
+export const Home = ({ events, setEventsDetail, accounts, todoList, addTodo, updateTodo, deleteTodo}) => {
     const [showEventModal, setShowEventModal] = useState(false);
     const [todoForm, setTodoForm] = useState(<></>);
     const showAddForm = (e) => {
@@ -25,7 +25,7 @@ export const Home = ({ events, accounts, todoList, addTodo, updateTodo, deleteTo
         <>
             <ModalDialog isShow={showEventModal} toggleShow={setShowEventModal} form={todoForm}/>
             <div style={{ margin: "5px 5px 0 5px" }}>
-                <Calendar events={events} eventsClickHandler={eventsClickHandler} dateClickHandler={dateClickHandler}/>
+                <Calendar events={events} setEventsDetail={setEventsDetail} eventsClickHandler={eventsClickHandler} dateClickHandler={dateClickHandler}/>
             </div>
         </>
     );
