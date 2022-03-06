@@ -85,7 +85,6 @@ const RouterApp = () => {
 
 function App() {
     const has_auth = validateToken();
-    console.log(has_auth);
     return (
         <div className="App">
             {
