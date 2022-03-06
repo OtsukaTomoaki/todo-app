@@ -40,7 +40,20 @@ body {/*要修正*/
     transform: rotate(360deg);
   }
 }
+/* signin */
+.signin-wrap {
+  position: fixed;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
 
+.signin-title {
+  font-size: 22px;
+  font-weight: 600;
+}
+
+/* Calendar */
 td.fc-day-sat {
   background-color: #eaf4ff;
 }
