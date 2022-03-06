@@ -9,3 +9,6 @@ export const getTokenFromLocalStorage = () => {
     return token;
 };
 
+export const removeTokenToLocalStorage = () => {
+    localStorage.removeItem(tokenKey);
+};
