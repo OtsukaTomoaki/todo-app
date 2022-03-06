@@ -7,6 +7,7 @@ import { SignIn } from './SignIn';
 import '../static/App.css';
 import { useTodo } from "../hooks/useTodo";
 import { useAccounts } from '../hooks/useAccounts';
+import { useEvents } from "../hooks/useEvents";
 import { BugerMenu } from '../components/BurgerMenu';
 import { InputMultiCheckBox } from '../components/MultiCheckBox';
 
@@ -48,28 +49,8 @@ const RouterApp = () => {
         deleteTodoListItem
     } = useTodo();
 
-    const [events, setEvents] = useState([]);
-    useEffect(() => {
-        const selectedAccounts = accountList.filter((account) => account.selected)
-        const newEvents = todoList.filter((v) => {
-            //チェック中のユーザのタスクか
-            return selectedAccounts.some((account) => account.id === v.engaged_user_id);
-        }).map((v) => {
-            //カレンダーで読み込める形式にする
-            const eventColor = selectedAccounts.find((account) => account.id === v.engaged_user_id).color;
-            return {
-                id: v.id,
-                title: v.title,
-                description: v.memo,
-                start: v.start_date.split('T')[0],
-                end: v.end_date.split('T')[0],
-                backgroundColor: eventColor,
-                borderColor: eventColor,
-                editable: false
-            }
-        });
-        setEvents(newEvents);
-    }, [accountList, todoList]);
+    //イベントの一覧
+    const { events, setEvents } = useEvents(accountList, todoList);
 
     return (
         <>
