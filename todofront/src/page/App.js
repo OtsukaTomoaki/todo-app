@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter, Routes, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import { Home } from './Home';
 import { SignIn } from './SignIn';
@@ -10,8 +10,11 @@ import { useAccounts } from '../hooks/useAccounts';
 import { BugerMenu } from '../components/BurgerMenu';
 import { InputMultiCheckBox } from '../components/MultiCheckBox';
 
+import { validateToken, getUserId } from "../common/signinUserProvider";
+
 const RouterApp = () => {
     const { accountList, setAccountList } = useAccounts();
+
     //チェックボックス表示用のリストを生成
     const accounts = accountList.map((v) => {
         return {
@@ -43,7 +46,7 @@ const RouterApp = () => {
         updateTodoListItem,
         deleteTodoListItem
     } = useTodo();
-    
+
     const [events, setEvents] = useState([]);
     useEffect(() => {
         const selectedAccounts = accountList.filter((account) => account.selected)
@@ -65,15 +68,13 @@ const RouterApp = () => {
         });
         setEvents(newEvents);
     }, [accountList, todoList]);
-    
+
     return (
         <>
             <BugerMenu items={[accountsBugerItem]} />
             <BrowserRouter>
                 <Routes>
-                    <Route exact path="/" element={<SignIn nextUrl="/home" />} />
-
-                    <Route exact path="/home" element={<Home events={{ events }} accounts={accountList} todoList={todoList} addTodo={addTodoListItem} updateTodo={updateTodoListItem} deleteTodo={deleteTodoListItem}/>} />
+                    <Route exact path="/home" element={<Home events={{ events }} accounts={accountList} todoList={todoList} addTodo={addTodoListItem} updateTodo={updateTodoListItem} deleteTodo={deleteTodoListItem} />} />
                 </Routes>
             </BrowserRouter>
         </>
@@ -81,9 +82,14 @@ const RouterApp = () => {
 };
 
 function App() {
+    const has_auth = validateToken();
+    console.log(has_auth);
     return (
         <div className="App">
-            <RouterApp />
+            {
+                has_auth ? <RouterApp /> : <SignIn nextUrl="/home" />
+
+            }
         </div>
     );
 }

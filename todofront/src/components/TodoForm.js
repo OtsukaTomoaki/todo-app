@@ -118,7 +118,6 @@ const Form = ({ control, accounts }) => {
 
 export const AddTodoForm = ({ accounts, addTodo, toggleShow, date }) => {
     const { userid } = parseJwt();
-    console.log(date)
     const { control, handleSubmit } = useForm({
         defaultValues: {
             title: '',
@@ -147,7 +146,6 @@ export const AddTodoForm = ({ accounts, addTodo, toggleShow, date }) => {
 };
 
 export const UpdateTodoForm = ({ accounts, updateTodo, deleteTodo, toggleShow, todo }) => {
-    console.log(todo);
     const { control, handleSubmit } = useForm({
         defaultValues: {
             id: todo.id,
@@ -181,7 +179,6 @@ function convertDateToStr(date) {
     const date_str = `${date.getFullYear()}-${padStartWith0(date.getMonth() + 1)}-${padStartWith0(date.getDate())}`;
     return date_str;
 }
-
 
 function padStartWith0(number) {
     return number.toString().padStart(2, '0');
