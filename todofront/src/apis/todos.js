@@ -14,7 +14,7 @@ export const getAllTodoData = async () => {
 };
 
 export const addTodoData = async (todo) => {
-    const response = await axios.post(API_BASEURL, todo);
+    const response = await axios.post(`${API_BASEURL}/`, todo);
     return response.data;
 }
 

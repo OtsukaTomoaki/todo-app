@@ -1,6 +1,5 @@
 const tokenKey = 'todoToken';
 
-
 export const setTokenToLocalStorage = (value) => {
     localStorage.setItem(tokenKey, value);
 };

@@ -7,36 +7,26 @@ import Checkbox from '@material-ui/core/Checkbox';
 
 import DateFnsUtils from '@date-io/date-fns'
 import { DatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers'
+import { parseJwt } from "../common/signinUserProvider";
 
-export const TodoForm = ({ todo, accounts }) => {
+export const TodoForm = ({ todo, accounts, updateTodo, toggleShow }) => {
+    const { userid } = parseJwt();
     const { control, handleSubmit } = useForm({
         defaultValues: {
-            checkBox: false,
-            textBox: "",
-            pullDown: "",
+            title: '',
+            days_required: 1,
+            state: "TODO",
+            engaged_user_id: userid,
+            start_date: convertDateToStr(new Date())
         },
     });
-    const onSubmit = () => {
+    const onSubmit = (data) => {
+        console.log(data);
+        updateTodo(data);
+        toggleShow(false);
     };
     return (
-
         <form onSubmit={handleSubmit(onSubmit)}>
-            <Controller
-                control={control}
-                name="checkBox"
-                render={({ field: { value, onChange } }) => (
-                    <FormControlLabel
-                        control={
-                            <Checkbox
-                                checked={value}
-                                onChange={onChange}
-                                color='primary'
-                            />
-                        }
-                        label="チェックボックス"
-                    />
-                )}
-            />
             <Controller
                 control={control}
                 name="title"
@@ -68,7 +58,7 @@ export const TodoForm = ({ todo, accounts }) => {
             />
             <Controller
                 control={control}
-                name="start_at"
+                name="start_date"
 
                 render={({ field }) => (
                     <TextField
@@ -85,8 +75,7 @@ export const TodoForm = ({ todo, accounts }) => {
             />
             <Controller
                 control={control}
-                name="days"
-
+                name="days_required"
                 render={({ field }) => (
                     <TextField
                         {...field}
@@ -103,19 +92,38 @@ export const TodoForm = ({ todo, accounts }) => {
             />
             <Controller
                 control={control}
-                name="pullDown"
+                name="engaged_user_id"
                 render={({ field }) => (
                     <TextField
                         {...field}
                         label="担当者"
-                        fullWidth
                         margin="normal"
-                        id="select"
+                        fullWidth
+                        id="select_engaged_user_id"
                         select
                     >
                         {
                             accounts.map((account) => <MenuItem key={account.id} value={account.id}>{account.username}</MenuItem>)
                         }
+                    </TextField>
+                )}
+            />
+            <Controller
+                control={control}
+                name="state"
+                render={({ field }) => (
+                    <TextField
+                        {...field}
+                        label="進捗"
+                        fullWidth
+                        margin="normal"
+                        id="select_state"
+                        select
+                    >
+                        <MenuItem value="PARKING">保留中</MenuItem>
+                        <MenuItem value="TODO">未着手</MenuItem>
+                        <MenuItem value="DOING">仕掛り中</MenuItem>
+                        <MenuItem value="DONE">完了</MenuItem>
                     </TextField>
                 )}
             />
@@ -129,3 +137,13 @@ export const TodoForm = ({ todo, accounts }) => {
         </form>
     );
 };
+
+function convertDateToStr(date) {
+    const date_str = `${date.getFullYear()}-${padStartWith0(date.getMonth() + 1)}-${padStartWith0(date.getDate())}`;
+    return date_str;
+}
+
+
+function padStartWith0(number){
+    return number.toString().padStart(2, '0');
+}

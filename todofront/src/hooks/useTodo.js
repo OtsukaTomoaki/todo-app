@@ -27,12 +27,8 @@ export const useTodo = () => {
     };
     //新規Todoを追加
     const addTodoListItem = (todoContent) => {
-        const newTodoItem = {
-            content: todoContent,
-            id: ulid(),
-            done: false//デフォルトでfalse
-        };
-        return todoData.addTodoData(newTodoItem).then((addedTodo) => {
+
+        return todoData.addTodoData(todoContent).then((addedTodo) => {
             setTodoList([addedTodo, ...todoList]);
         });
     };

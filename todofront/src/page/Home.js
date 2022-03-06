@@ -3,10 +3,10 @@ import { Calendar } from "../components/Calendar";
 import { ModalDialog } from "../components/ModalDialog";
 import { TodoForm } from "../components/TodoForm";
 
-export const Home = ({ events, accounts, todoList }) => {
+export const Home = ({ events, accounts, todoList, addTodo}) => {
     const [showEventModal, setShowEventModal] = useState(false);
-    const form = <TodoForm accounts={accounts} />;
-    console.log(form);
+    const form = <TodoForm accounts={accounts} toggleShow={setShowEventModal} updateTodo={addTodo}/>;
+
     return (
         <>
             <ModalDialog isShow={showEventModal} toggleShow={setShowEventModal} form={form}/>

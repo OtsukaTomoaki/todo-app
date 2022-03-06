@@ -73,7 +73,7 @@ const RouterApp = () => {
                 <Routes>
                     <Route exact path="/" element={<SignIn nextUrl="/home" />} />
 
-                    <Route exact path="/home" element={<Home events={{ events }} accounts={accountList} todoList={todoList}/>} />
+                    <Route exact path="/home" element={<Home events={{ events }} accounts={accountList} todoList={todoList} addTodo={addTodoListItem}/>} />
                 </Routes>
             </BrowserRouter>
         </>
