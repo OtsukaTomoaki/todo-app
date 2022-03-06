@@ -74,6 +74,19 @@ td.fc-day-sun {
   top: 16px;
 }
 
+.buger-menu-content {
+  width: 100%;
+  float: left;
+  margin: 15px 0 15px 0;
+}
+
+.buger-menu-content_bottom {
+  position: absolute;
+  bottom: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
 /* Color/shape of burger icon bars */
 .bm-burger-bars {
   background: white;

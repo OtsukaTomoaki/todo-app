@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { fiveFinger } from "../common/fiveFingerProvider";
 
 export const useEvents = (accountList, todoList, todoStatus, showEventsDetail) => {
     const [events, setEvents] = useState([]);
@@ -17,7 +18,7 @@ export const useEvents = (accountList, todoList, todoStatus, showEventsDetail) =
             const eventColor = selectedAccounts.find((account) => account.id === v.engaged_user_id).color;
             return {
                 id: v.id,
-                title: showEventsDetail ? generateEventTitleDetail(v, selectedTodoStatus, selectedAccounts) : v.title,
+                title: showEventsDetail ? generateEventTitleDetail(v, selectedTodoStatus, selectedAccounts) : generateEventTitle(v),
                 description: v.memo,
                 start: v.start_date.split('T')[0],
                 end: v.end_date.split('T')[0],
@@ -31,7 +32,16 @@ export const useEvents = (accountList, todoList, todoStatus, showEventsDetail) =
     return {events, setEvents};
 };
 
-function generateEventTitleDetail(todo, selectedStatus, selectedAccounts) {
-    const detailTitle = `${todo.title} (${selectedStatus.find((s) => s.id === todo.state).text}) 👤${selectedAccounts.find((account)=>account.id === todo.engaged_user_id).username}`;
+function generateEventTitle(todo) {
+    const detailTitle = `${findFiveFingerIcon(todo.five_finger)} ${todo.title}`;
     return detailTitle;
+}
+
+function generateEventTitleDetail(todo, selectedStatus, selectedAccounts) {
+    const detailTitle = `${todo.title} (${selectedStatus.find((s) => s.id === todo.state).text}) ${findFiveFingerIcon(todo.five_finger)} ${selectedAccounts.find((account)=>account.id === todo.engaged_user_id).username}`;
+    return detailTitle;
+}
+
+function findFiveFingerIcon(id) {
+    return fiveFinger.find((v) => v.id === id).icon;
 }

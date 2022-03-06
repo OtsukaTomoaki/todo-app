@@ -9,6 +9,7 @@ import DateFnsUtils from '@date-io/date-fns'
 import { DatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers'
 import { parseJwt } from "../common/signinUserProvider";
 import { TextStyle, SmallTextStyle } from "../common/styleProvider";
+import { fiveFinger } from "../common/fiveFingerProvider";
 
 const Form = ({ control, accounts }) => {
     return (
@@ -120,6 +121,25 @@ const Form = ({ control, accounts }) => {
                     />
                 )}
             />
+
+            <Controller
+                control={control}
+                name="five_finger"
+                render={({ field }) => (
+                    <TextField
+                        {...field}
+                        label="ファイブ・フィンガー"
+                        style={TextStyle}
+                        margin="normal"
+                        id="select_five_finger"
+                        select
+                    >
+                        {
+                            fiveFinger.map((v) => <MenuItem key={v.id} value={v.id}>{v.text}{v.icon}</MenuItem>)
+                        }
+                    </TextField>
+                )}
+            />
         </>
     )
 };
@@ -132,7 +152,8 @@ export const AddTodoForm = ({ accounts, addTodo, toggleShow, date }) => {
             days_required: 1,
             state: "TODO",
             engaged_user_id: userid,
-            start_date: date
+            start_date: date,
+            five_finger: 3
         },
     });
     const onSubmit = (data) => {
@@ -162,7 +183,8 @@ export const UpdateTodoForm = ({ accounts, updateTodo, deleteTodo, toggleShow, t
             days_required: todo.days_required,
             state: todo.state,
             engaged_user_id: todo.engaged_user_id,
-            start_date: todo.start_date.split('T')[0]
+            start_date: todo.start_date.split('T')[0],
+            five_finger: todo.five_finger
         },
     });
     const onSubmit = (data) => {
