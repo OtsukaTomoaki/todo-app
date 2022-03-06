@@ -19,7 +19,8 @@ const RouterApp = () => {
     const accounts = accountList.map((v) => {
         return {
             id: v.id,
-            item: v.username
+            item: v.username,
+            color: v.color
         };
     });
     //要素がチェック状態にあるか検索した結果を返す関数
@@ -55,14 +56,15 @@ const RouterApp = () => {
             return selectedAccounts.some((account) => account.id === v.engaged_user_id);
         }).map((v) => {
             //カレンダーで読み込める形式にする
+            const eventColor = selectedAccounts.find((account) => account.id === v.engaged_user_id).color;
             return {
                 id: v.id,
                 title: v.title,
                 description: v.memo,
                 start: v.start_date.split('T')[0],
                 end: v.end_date.split('T')[0],
-                backgroundColor: 'red',
-                borderColor: 'red',
+                backgroundColor: eventColor,
+                borderColor: eventColor,
                 editable: true
             }
         });
@@ -88,7 +90,6 @@ function App() {
         <div className="App">
             {
                 has_auth ? <RouterApp /> : <SignIn nextUrl="/home" />
-
             }
         </div>
     );

@@ -1,5 +1,6 @@
 import React from "react";
 import { slide as Menu } from "react-burger-menu";
+import Button from '@material-ui/core/Button';
 
 import { removeTokenToLocalStorage } from "../common/webStorage";
 
@@ -19,9 +20,9 @@ export const BugerMenu = ({ items, user }) => {
                         })
                     }
                 </div>
-                <button onClick={handleSignOut}>
+                <Button onClick={handleSignOut}>
                     サインアウト
-                </button>
+                </Button>
             </Menu>
             <div style={{ color: 'white', float: "left", marginLeft: 80, marginTop: 10, fontWeight: 800, fontSize: 20 }} >ToDo Calendar</div>
         </div>
