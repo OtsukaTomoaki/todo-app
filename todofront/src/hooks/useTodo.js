@@ -33,8 +33,8 @@ export const useTodo = () => {
     //Todoを削除
     const deleteTodoListItem = (id) => {
         todoData.deleteTodoData(id).then((deletedId) => {
-            const newTodoList = todoList.filter((todo) => todo.id !== deletedId);
-            setTodoList(newTodoList);
+            const newTodoList = todoList.filter((todo) => todo.id !== id);
+            setTodoList([...newTodoList]);
         })
     };
 

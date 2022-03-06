@@ -161,6 +161,14 @@ export const UpdateTodoForm = ({ accounts, updateTodo, deleteTodo, toggleShow, t
         updateTodo(todo.id, data);
         toggleShow(false);
     };
+
+    const onDelete = () => {
+        const confirmOk = window.confirm('削除します。よろしいですか？');
+        if(confirmOk) {
+            deleteTodo(todo.id);
+            toggleShow(false);
+        }
+    }
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
             <Form control={control} accounts={accounts}/>
@@ -170,6 +178,14 @@ export const UpdateTodoForm = ({ accounts, updateTodo, deleteTodo, toggleShow, t
                 type="submit"
             >
                 更新
+            </Button>
+            <Button
+                variant="contained"
+                color="secondary"
+                type="button"
+                onClick={onDelete}
+            >
+                削除
             </Button>
         </form>
     );
