@@ -20,7 +20,7 @@ export const BugerMenu = ({ items, user }) => {
                         })
                     }
                 </div>
-                <Button onClick={handleSignOut}>
+                <Button onClick={handleSignOut} color='primary' type="button" variant="outlined">
                     サインアウト
                 </Button>
             </Menu>
