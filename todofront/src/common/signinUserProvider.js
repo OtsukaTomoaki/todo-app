@@ -31,7 +31,6 @@ export const validateToken = () => {
         const nowTimeStamp = Math.floor(new Date().getTime()/ 1000 );
         const tokenExp = parseFloat(tokenPayload['exp']);
 
-        console.log(nowTimeStamp, tokenExp);
         return nowTimeStamp < tokenExp;
     }
 }
