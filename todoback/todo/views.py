@@ -51,9 +51,17 @@ class TodoAPIView(APIView):
 
     def put(self, request, id):
         todo = get_object_or_404(Todo, pk=id)
+        is_done = todo.state == 'DONE';
         todo_serializer = TodoSerializer(data=request.data, instance=todo)
+        update_end_date = not is_done and request.data['state'] == 'DONE';
         if todo_serializer.is_valid():
-            todo_serializer.save()
+            if update_end_date:
+                todo_serializer.save(end_date=datetime.datetime.now())
+            else:
+                todo_serializer.save(
+                    end_date=(
+                        datetime.datetime.strptime(request.data['start_date'].split('T')[0], 
+                        '%Y-%m-%d') + datetime.timedelta(days=int(request.data.get('days_required')))))
             return Response(todo_serializer.data, status=status.HTTP_201_CREATED)
         return Response(todo_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     def delete(self, request, id, format=None):
