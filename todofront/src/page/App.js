@@ -65,7 +65,7 @@ const RouterApp = () => {
                 end: v.end_date.split('T')[0],
                 backgroundColor: eventColor,
                 borderColor: eventColor,
-                editable: true
+                editable: false
             }
         });
         setEvents(newEvents);
