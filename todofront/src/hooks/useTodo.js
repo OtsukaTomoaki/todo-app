@@ -6,7 +6,7 @@ import * as todoData from "../apis/todos";
 export const useTodo = () => {
     const [todoList, setTodoList] = useState([]);
 
-    //全て取得
+    //全て取得(todo:全て取得するとコストが増えるので、前後も含め3ヶ月程度を絞り込んで取得できるようにする)
     useEffect(() => {
         todoData.getAllTodoData().then((response) => {
             setTodoList(response);
