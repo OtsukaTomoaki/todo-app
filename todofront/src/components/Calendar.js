@@ -15,7 +15,7 @@ export const Calendar = ({ events, eventsClickHandler, dateClickHandler }) => {
                 headerToolbar={{
                     left: 'prev,next',
                     center: 'title',
-                    right: 'dayGridMonth,timeGridWeek,listMonth',
+                    right: 'dayGridMonth,listMonth',
                 }}
                 footerToolbar={{
                     right: "prev,next"
@@ -26,6 +26,17 @@ export const Calendar = ({ events, eventsClickHandler, dateClickHandler }) => {
                 eventDidMount={(e) => {
                 }}
                 locale="ja"
+                buttonText= {{
+                    prev:     '<',
+                    next:     '>',
+                    prevYear: '<<',
+                    nextYear: '>>',
+                    today:    '今日',
+                    month:    'カレンダー',
+                    week:     '週',
+                    day:      '日',
+                    list:     'ToDo一覧'
+                }}
                 selectable={true}
                 selectHelper={true}
                 allDaySlot={false}
