@@ -8,7 +8,7 @@ export const Home = ({ events, accounts, todoList, addTodo, updateTodo, deleteTo
     const [showEventModal, setShowEventModal] = useState(false);
     const [todoForm, setTodoForm] = useState(<></>);
     const showAddForm = (e) => {
-        const form = <AddTodoForm accounts={accounts} toggleShow={setShowEventModal} updateTodo={addTodo} date={e.dateStr}/>;
+        const form = <AddTodoForm accounts={accounts} toggleShow={setShowEventModal} addTodo={addTodo} date={e.dateStr}/>;
         setTodoForm(form)
         setShowEventModal(true);
     };
