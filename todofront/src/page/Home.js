@@ -24,7 +24,6 @@ export const Home = ({ events, accounts, todoList, addTodo, updateTodo, deleteTo
     return (
         <>
             <ModalDialog isShow={showEventModal} toggleShow={setShowEventModal} form={todoForm}/>
-            <button onClick={() => setShowEventModal(true)}>showmodal</button>
             <div style={{ margin: "5px 5px 0 5px" }}>
                 <Calendar events={events} eventsClickHandler={eventsClickHandler} dateClickHandler={dateClickHandler}/>
             </div>
