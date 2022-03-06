@@ -5,6 +5,7 @@ import { Button, MenuItem } from "@material-ui/core";
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import { fetchToken } from "../apis/auth";
+import { TextStyle } from "../common/styleProvider";
 
 const Form = ({ control, accounts }) => {
     return (
@@ -12,11 +13,12 @@ const Form = ({ control, accounts }) => {
             <Controller
                 control={control}
                 name="userid"
+
                 render={({ field }) => (
                     <TextField
                         {...field}
                         label="ユーザID（メールアドレス）"
-                        fullWidth
+                        style={TextStyle}
                         margin="normal"
                         placeholder="example@icloud.com"
                     />
@@ -29,7 +31,8 @@ const Form = ({ control, accounts }) => {
                     <TextField
                         {...field}
                         label="パスワード"
-                        fullWidth
+                        style={TextStyle}
+
                         margin="normal"
                         type="password"
                     />
@@ -56,14 +59,17 @@ export const SignInForm = ({ onSuccess, onFailed }) => {
     };
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
-            <Form control={control}/>
-            <Button
-                variant="contained"
-                color="primary"
-                type="submit"
-            >
-                サインイン
-            </Button>
+            <Form control={control} />
+            <div>
+                <Button
+                    variant="contained"
+                    color="primary"
+                    type="submit"
+                >
+                    サインイン
+                </Button>
+            </div>
+
         </form>
     );
 };

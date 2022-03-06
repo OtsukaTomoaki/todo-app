@@ -8,6 +8,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import DateFnsUtils from '@date-io/date-fns'
 import { DatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers'
 import { parseJwt } from "../common/signinUserProvider";
+import { TextStyle, SmallTextStyle } from "../common/styleProvider";
 
 const Form = ({ control, accounts }) => {
     return (
@@ -19,25 +20,10 @@ const Form = ({ control, accounts }) => {
                     <TextField
                         {...field}
                         label="タイトル"
-                        fullWidth
+                        style={TextStyle}
+                        required
                         margin="normal"
                         placeholder="タイトル"
-                    />
-                )}
-            />
-            <Controller
-                control={control}
-                name="memo"
-
-                render={({ field }) => (
-                    <TextField
-                        {...field}
-                        label="概要"
-                        fullWidth
-                        margin="normal"
-                        placeholder="概要"
-                        multiline
-                        maxRows={4}
                     />
                 )}
             />
@@ -51,6 +37,8 @@ const Form = ({ control, accounts }) => {
                         label="開始日"
                         margin="normal"
                         placeholder="開始日"
+                        required
+                        style={SmallTextStyle}
                         type="date"
                         InputLabelProps={{
                             shrink: true,
@@ -67,6 +55,8 @@ const Form = ({ control, accounts }) => {
                         label="所要日数"
                         margin="normal"
                         placeholder="所要日数"
+                        style={SmallTextStyle}
+                        required
                         type="number"
                         InputLabelProps={{
                             shrink: true,
@@ -83,7 +73,8 @@ const Form = ({ control, accounts }) => {
                         {...field}
                         label="担当者"
                         margin="normal"
-                        fullWidth
+                        style={TextStyle}
+                        required
                         id="select_engaged_user_id"
                         select
                     >
@@ -100,7 +91,7 @@ const Form = ({ control, accounts }) => {
                     <TextField
                         {...field}
                         label="進捗"
-                        fullWidth
+                        style={TextStyle}
                         margin="normal"
                         id="select_state"
                         select
@@ -110,6 +101,23 @@ const Form = ({ control, accounts }) => {
                         <MenuItem value="DOING">仕掛り中</MenuItem>
                         <MenuItem value="DONE">完了</MenuItem>
                     </TextField>
+                )}
+            />
+
+            <Controller
+                control={control}
+                name="memo"
+
+                render={({ field }) => (
+                    <TextField
+                        {...field}
+                        label="概要"
+                        style={TextStyle}
+                        margin="normal"
+                        placeholder="概要"
+                        multiline
+                        maxRows={8}
+                    />
                 )}
             />
         </>
@@ -133,7 +141,7 @@ export const AddTodoForm = ({ accounts, addTodo, toggleShow, date }) => {
     };
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
-            <Form control={control} accounts={accounts}/>
+            <Form control={control} accounts={accounts} />
             <Button
                 variant="contained"
                 color="primary"
@@ -164,14 +172,14 @@ export const UpdateTodoForm = ({ accounts, updateTodo, deleteTodo, toggleShow, t
 
     const onDelete = () => {
         const confirmOk = window.confirm('削除します。よろしいですか？');
-        if(confirmOk) {
+        if (confirmOk) {
             deleteTodo(todo.id);
             toggleShow(false);
         }
     }
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
-            <Form control={control} accounts={accounts}/>
+            <Form control={control} accounts={accounts} />
             <Button
                 variant="contained"
                 color="primary"
