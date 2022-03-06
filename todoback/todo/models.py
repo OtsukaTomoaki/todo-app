@@ -34,6 +34,7 @@ class Todo(models.Model):
     days_required = models.IntegerField()
     start_date = models.DateTimeField('開始日')
     end_date = models.DateTimeField('終了日')
+    five_finger = models.IntegerField()
     class Meta:
         db_table = 'todo'
 

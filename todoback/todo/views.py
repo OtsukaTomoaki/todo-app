@@ -32,11 +32,13 @@ class TodoListAPIView(APIView):
         if todo_serializer.is_valid():
             start_date = datetime.datetime.now() if request.data.get('start_date') == None else datetime.datetime.strptime(request.data.get('start_date') , '%Y-%m-%d')
             end_date = start_date + datetime.timedelta(days=request.data.get('days_required'))
+            five_finger = 3 if request.data.get('five_finger') == None else request.data.get('five_finger');
             todo_serializer.save(
                 created_by=user, 
                 start_date=start_date,
                 end_date=end_date,
-                state='PARKING')
+                state='PARKING',
+                five_finger=five_finger)
             return Response(todo_serializer.data, status=status.HTTP_201_CREATED)
         return Response(todo_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 class TodoAPIView(APIView):
