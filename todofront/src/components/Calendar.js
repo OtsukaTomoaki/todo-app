@@ -15,20 +15,20 @@ export const Calendar = ({ events, eventsClickHandler, dateClickHandler }) => {
                 headerToolbar={{
                     left: 'prev,next',
                     center: 'title',
-                    right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek',
+                    right: 'dayGridMonth,timeGridWeek,listMonth',
                 }}
                 footerToolbar={{
                     right: "prev,next"
                 }}
-                nowIndicator='true'
+                nowIndicator={true}
                 dateClick={dateClickHandler}
                 eventClick={eventsClickHandler}
                 eventDidMount={(e) => {
-
                 }}
                 locale="ja"
-                selectable='true'
-                selectHelper='true'
+                selectable={true}
+                selectHelper={true}
+                allDaySlot={false}
                 events={events}
             />
         </>

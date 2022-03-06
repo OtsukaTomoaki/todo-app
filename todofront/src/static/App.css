@@ -47,6 +47,9 @@ td.fc-day-sat {
 td.fc-day-sun {
   background-color: #eaf4ff;
 }
+.fc-list-event-time {
+  display:none;
+}
 
 /* BugerMenu */
 /* Position and sizing of burger button */
