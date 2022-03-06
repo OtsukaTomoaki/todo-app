@@ -6,23 +6,38 @@ import interactionPlugin from '@fullcalendar/interaction';
 import listPlugin from '@fullcalendar/list';
 
 export const Calendar = ({ events }) => {
+    let clickCnt = 0;
+    let oneClickTimer;
+    const eventsClick = (e) => {
+        clickCnt++;
+        if (clickCnt === 1) {
+            oneClickTimer = setTimeout(function () {
+                clickCnt = 0;
+            }, 400);
+        } else if (clickCnt === 2) {
+            clearTimeout(oneClickTimer);
+            clickCnt = 0;
+            alert(e.event.id);
+        }
+    };
+
     return (
         <>
             <FullCalendar
-                plugins={[dayGridPlugin, timeGridPlugin, listPlugin]}
+                plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin, listPlugin]}
                 initialView="dayGridMonth"
                 headerToolbar={{
                     left: 'prev,next',
                     center: 'title',
                     right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek',
                 }}
-                footerToolbar= {{
+                footerToolbar={{
                     right: "prev,next"
                 }}
-                nowIndicator
+                nowIndicator='true'
                 dateClick={(e) => console.log(e.dateStr)}
-                eventClick={(e) => console.log(e.event.id)}
-                eventDidMount= {(e)=>{
+                eventClick={eventsClick}
+                eventDidMount={(e) => {
 
                 }}
                 locale="ja"
