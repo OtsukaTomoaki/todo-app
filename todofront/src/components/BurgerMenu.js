@@ -10,27 +10,31 @@ export const BugerMenu = ({ accountCheckItems, todoStatusCheckItems }) => {
         window.location.reload();
     };
     return (
-        <div style={{ width: "100%", height: 50, backgroundColor: "#2C3E50" }}>
-            <Menu width="100">
+        <div className="buger-menu-wrap">
+            <Menu width={450}>
                 <div className="buger-menu-content">
-                    <label>表示するアカウント</label>
+                    <label className="buger-menu-content-title">表示するメンバー</label>
+                    <div className="buger-menu-content-item">
                     {
                         accountCheckItems
                     }
+                    </div>
                 </div>
                 <div className="buger-menu-content">
-                    <label>表示するTodo</label>
+                    <label className="buger-menu-content-title">表示する進捗</label>
+                    <div className="buger-menu-content-item">
                     {
                         todoStatusCheckItems
                     }
-                </div>
-                <div className="buger-menu-content_bottom">
-                    <Button onClick={handleSignOut} color='primary' type="button" variant="outlined">
-                        サインアウト
-                    </Button>
+                    </div>
                 </div>
             </Menu>
-            <div style={{ color: 'white', float: "left", marginLeft: 80, marginTop: 10, fontWeight: 800, fontSize: 20 }} >ToDo Calendar</div>
+            <div className="header-app-name" >ToDo Calendar</div>
+            <div className="header-left-item">
+                <Button onClick={handleSignOut} color='inherit' type="button">
+                    サインアウト
+                </Button>
+            </div>
         </div>
     );
 }

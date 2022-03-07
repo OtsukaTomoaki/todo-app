@@ -69,6 +69,21 @@ td.fc-day-sun {
 }
 
 /* BugerMenu */
+.header-app-name {
+  color: white;
+  float: left;
+  margin-left: 80px;
+  margin-top: 10px;
+  font-weight: 800;
+  font-size: 20px; 
+}
+
+.header-left-item {
+  color: white;
+  float: right;
+  margin-top: 10px;
+}
+
 /* Position and sizing of burger button */
 .bm-burger-button {
   position: absolute;
@@ -78,10 +93,30 @@ td.fc-day-sun {
   top: 16px;
 }
 
+.buger-menu-wrap {
+  width: 100%;
+  height: 50px;
+  background-color: #2C3E50;
+}
+
 .buger-menu-content {
   width: 100%;
   float: left;
-  margin: 15px 0 15px 0;
+  margin: 15px 0 0 0;
+  margin-left: -40px;
+}
+
+.buger-menu-content .buger-menu-content-title {
+  width: auto;
+  position: absolute;
+  left: 10%;
+  margin: 5px 5px;
+}
+
+.buger-menu-content .buger-menu-content-item {
+  padding: 10px 0 0 10px;
+  left: 0;
+  width: auto;
 }
 
 .buger-menu-content_bottom {
