@@ -43,7 +43,7 @@ body {/*要修正*/
 /* signin */
 .signin-wrap {
   position: fixed;
-  top: 30%;
+  top: 40%;
   left: 50%;
   transform: translate(-50%, -50%);
 }
@@ -51,6 +51,10 @@ body {/*要修正*/
 .signin-title {
   font-size: 22px;
   font-weight: 600;
+}
+
+.signin-botton-wrap {
+  padding-top: 20px;
 }
 
 /* Calendar */

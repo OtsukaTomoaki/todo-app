@@ -1,12 +1,6 @@
-import { useState, useEffect, useRef } from "react";
 import { useForm, Controller } from "react-hook-form";
 import TextField from "@material-ui/core/TextField";
 import { Button, MenuItem } from "@material-ui/core";
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-
-import DateFnsUtils from '@date-io/date-fns'
-import { DatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers'
 import { parseJwt } from "../common/signinUserProvider";
 import { TextStyle, SmallTextStyle } from "../common/styleProvider";
 import { fiveFinger } from "../common/fiveFingerProvider";

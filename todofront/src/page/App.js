@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState } from "react";
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import { Home } from './Home';
@@ -11,7 +11,7 @@ import { useEvents } from "../hooks/useEvents";
 import { BugerMenu } from '../components/BurgerMenu';
 import { AccountMultiCheckBox, TodoStatusMultiCheckBox } from '../components/MultiCheckBox';
 
-import { validateToken, getUserId } from "../common/signinUserProvider";
+import { validateToken } from "../common/signinUserProvider";
 import { todoStatus as initialTodoStatus } from "../common/todoStatusProvider";
 
 const RouterApp = () => {

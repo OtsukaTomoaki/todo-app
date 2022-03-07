@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { ulid } from "ulid";
 
 import * as todoData from "../apis/todos";
 
@@ -44,23 +43,4 @@ export const useTodo = () => {
         addTodoListItem,
         deleteTodoListItem
     };
-};
-
-const nextTodo = (currentState) => {
-    let nextState;
-    switch (currentState) {
-        case 'PARKING':
-            nextState = 'TO';
-            break;
-        case 'TO':
-            nextState = 'DO';
-            break;
-        case 'DO':
-            nextState = 'DONE';
-            break;
-        default:
-            nextState = 'PARKING';
-            break;
-    }
-    return nextState;
 };

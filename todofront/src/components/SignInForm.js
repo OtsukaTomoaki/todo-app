@@ -1,9 +1,6 @@
-import { useState, useEffect, useRef } from "react";
 import { useForm, Controller } from "react-hook-form";
 import TextField from "@material-ui/core/TextField";
-import { Button, MenuItem } from "@material-ui/core";
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
+import { Button } from "@material-ui/core";
 import { fetchToken } from "../apis/auth";
 import { TextStyle } from "../common/styleProvider";
 
@@ -60,7 +57,7 @@ export const SignInForm = ({ onSuccess, onFailed }) => {
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
             <Form control={control} />
-            <div>
+            <div className="signin-botton-wrap">
                 <Button
                     variant="contained"
                     color="primary"
