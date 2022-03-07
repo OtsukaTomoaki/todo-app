@@ -7,10 +7,9 @@ from django.contrib.auth import authenticate, get_user_model
 from django.forms.fields import EmailField
 from django.utils.text import capfirst
 from django.utils.translation import gettext_lazy as _
+from todoback.settings import SECRET_KEY;
 
-SECRET_KEY = 'sample';
 UserModel = get_user_model()
-
 class UserCredentialAuthentication(BaseAuthentication):
     def authenticate(self, request):
         username = request._request.POST.get("username")
