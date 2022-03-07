@@ -31,7 +31,7 @@ class TodoListAPIView(APIView):
         todo_serializer = TodoSerializer(data=request.data)
         if todo_serializer.is_valid():
             start_date = datetime.datetime.now() if request.data.get('start_date') == None else datetime.datetime.strptime(request.data.get('start_date') , '%Y-%m-%d')
-            end_date = start_date + datetime.timedelta(days=request.data.get('days_required'))
+            end_date = start_date + datetime.timedelta(days=int(request.data.get('days_required')))
             five_finger = 3 if request.data.get('five_finger') == None else request.data.get('five_finger');
             todo_serializer.save(
                 created_by=user, 
