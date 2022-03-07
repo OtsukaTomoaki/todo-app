@@ -46,11 +46,17 @@ body {/*要修正*/
   top: 40%;
   left: 50%;
   transform: translate(-50%, -50%);
+  border: solid 1px #2C3E50;
+  padding: 10px;
+  box-shadow: 12px 12px 2px 1px #2C3E50;
 }
 
 .signin-title {
   font-size: 22px;
   font-weight: 600;
+  background-color: #2C3E50;
+  color: white;
+  padding: 5px;
 }
 
 .signin-botton-wrap {
