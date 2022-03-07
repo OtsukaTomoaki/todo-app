@@ -196,21 +196,23 @@ export const UpdateTodoForm = ({ accounts, updateTodo, deleteTodo, toggleShow, t
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
             <Form control={control} accounts={accounts} />
-            <Button
-                variant="contained"
-                color="primary"
-                type="submit"
-            >
-                更新
-            </Button>
-            <Button
-                variant="contained"
-                color="secondary"
-                type="button"
-                onClick={onDelete}
-            >
-                削除
-            </Button>
+            <div className="form-botton-wrap">
+                <Button
+                    variant="contained"
+                    color="primary"
+                    type="submit"
+                >
+                    更新
+                </Button>
+                <Button
+                    variant="contained"
+                    color="secondary"
+                    type="button"
+                    onClick={onDelete}
+                >
+                    削除
+                </Button>
+            </div>
         </form>
     );
 };
