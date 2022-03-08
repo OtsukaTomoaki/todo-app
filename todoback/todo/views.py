@@ -37,7 +37,6 @@ class TodoListAPIView(APIView):
                 created_by=user, 
                 start_date=start_date,
                 end_date=end_date,
-                state='PARKING',
                 five_finger=five_finger)
             return Response(todo_serializer.data, status=status.HTTP_201_CREATED)
         return Response(todo_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
