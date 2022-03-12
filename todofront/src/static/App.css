@@ -253,12 +253,14 @@ Note: Beware of modifying this element as it can break the animations - you shou
 
 .dialog-content-after {
   width: 90%;
+  max-width: 800px;
   height: 90%;
   background-color: white;
 }
 
-.dialog-content-after_min {
+.dialog-content-after_error {
   width: 70%;
+  max-width: 600px;
   height: 100px;
   background-color: white;
   color: #c7243a;

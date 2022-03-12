@@ -15,7 +15,7 @@ export const ErrorDialog = ({ message, isShow, setIsShow }) => {
             }}
             className={{
                 base: "dialog-content-base",
-                afterOpen: "dialog-content-after_min",
+                afterOpen: "dialog-content-after_error",
                 beforeClose: "dialog-content-before"
             }}
             closeTimeoutMS={500}
