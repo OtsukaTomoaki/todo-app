@@ -26,7 +26,7 @@ export const Calendar = ({ events, setEventsDetail, eventsClickHandler, dateClic
                 eventDidMount={(e) => {
                 }}
                 viewDidMount={((e) => {
-                    setEventsDetail(e.view.type === 'listMonth');
+                    setEventsDetail(e.view.type === 'listMonth' || e.view.type === 'listDay');
                 })}
                 locale="ja"
                 buttonText= {{
