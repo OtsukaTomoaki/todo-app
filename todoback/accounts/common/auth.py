@@ -15,7 +15,7 @@ class UserCredentialAuthentication(BaseAuthentication):
         username = request._request.POST.get("username")
         password = request._request.POST.get("password")
         print(username, password)
-        user_obj = UserModel.objects.filter(username=username).first()
+        user_obj = UserModel.objects.filter(email=username).first()
         #self.user_can_authenticate(user_obj)
         if not user_obj or not user_obj.check_password(password):
             raise exceptions.AuthenticationFailed('Eメールアドレス　または　パスワードに誤りがあります。')
@@ -30,7 +30,8 @@ def generate_jwt(user):
     return jwt.encode(
         {
             "userid": user.pk,
-            #"username": user.username,#emailをユーザIDに持つのでclaimにユーザ名は含めない
+            "username": user.username,
+            "is_superuser": user.is_superuser,
             "exp": timestamp
         },
         SECRET_KEY).decode("utf-8")
