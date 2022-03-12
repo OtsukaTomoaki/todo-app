@@ -4,7 +4,7 @@ import { Button } from "@material-ui/core";
 import { fetchToken } from "../apis/auth";
 import { TextStyle } from "../common/styleProvider";
 
-const Form = ({ control, accounts }) => {
+const Form = ({ control }) => {
     return (
         <>
             <Controller
@@ -18,6 +18,7 @@ const Form = ({ control, accounts }) => {
                         style={TextStyle}
                         margin="normal"
                         placeholder="example@icloud.com"
+                        required
                     />
                 )}
             />
@@ -29,7 +30,7 @@ const Form = ({ control, accounts }) => {
                         {...field}
                         label="パスワード"
                         style={TextStyle}
-
+                        required
                         margin="normal"
                         type="password"
                     />
@@ -40,7 +41,7 @@ const Form = ({ control, accounts }) => {
 };
 
 export const SignInForm = ({ onSuccess, onFailed }) => {
-    const { control, handleSubmit } = useForm({
+    const { control, handleSubmit, formState: { errors } } = useForm({
         defaultValues: {
             userid: '',
             password: ''
@@ -49,9 +50,9 @@ export const SignInForm = ({ onSuccess, onFailed }) => {
     const onSubmit = async (data) => {
         const success = await fetchToken(data.userid, data.password);
         if (success) {
-            onSuccess();
+            return onSuccess();
         } else {
-            onFailed()
+            return onFailed();
         }
     };
     return (
