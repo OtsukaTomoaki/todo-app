@@ -39,18 +39,15 @@ class AccountsAPIView(APIView):
 class SignUpAPIView(GenericAPIView):
     serializer_class = RegisterSerializer
     def post(self, request, *args,  **kwargs):
-        UserModel = get_user_model()
-        if len(UserModel.objects.filter(email=request.data.get('email'))) == 0:
-            serializer = self.get_serializer(data=request.data)
-            serializer.is_valid(raise_exception=True)
-            user = serializer.save()
-            token = generate_jwt(user)
-            return Response({
-                "user": UserSerializer(user, context=self.get_serializer_context()).data,
-                "token": token,
-            })
-        else:
-            return Response("登録済みのメールアドレスです。", status=status.HTTP_400_BAD_REQUEST)
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = serializer.save()
+        token = generate_jwt(user)
+        return Response({
+            "user": UserSerializer(user, context=self.get_serializer_context()).data,
+            "token": token,
+        })
+    
 
 class AccountsListAPIView(APIView):
     authentication_classes = [JWTAuthentication, ]
