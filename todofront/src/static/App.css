@@ -44,7 +44,9 @@ body {/*要修正*/
 .container {
   width: 100%;
   height: 100%;
-  background-color: #f5f5f5;
+  background: -moz-linear-gradient(top, #2C3E50, #FFF);
+  background: -webkit-linear-gradient(top, #2C3E50, #FFF);
+  background: linear-gradient(to bottom, #2C3E50, #FFF);  
   position: absolute;
   z-index: -1;
 }
@@ -54,25 +56,34 @@ body {/*要修正*/
   top: 40%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+
+.signin-form {
   border: solid 1px #2C3E50;
   padding: 10px;
   box-shadow: 12px 12px 2px 1px #2C3E50;
   background-color: white;
 }
 
-.signin-title {
-  font-size: 22px;
+.front-app-title {
+  font-size: 30px;
   font-weight: 600;
-  background-color: #2C3E50;
   color: white;
-  padding: 5px;
 }
 
 .signin-botton-wrap {
   padding-top: 20px;
 }
 
+.sign-up-link {
+  margin-top: 50px;
+}
+
 /* Calendar */
+.calendar-wrap {
+  margin: 5px 5px 0 5px;
+  background-color: #fff;
+}
 td.fc-day-sat {
   background-color: #eaf4ff;
 }
