@@ -7,7 +7,7 @@ import { removeTokenToLocalStorage } from "../common/webStorage";
 export const BugerMenu = ({ accountCheckItems, todoStatusCheckItems }) => {
     const handleSignOut = () => {
         removeTokenToLocalStorage();
-        window.location.reload();
+        window.location.href = '/signin';
     };
     return (
         <div className="buger-menu-wrap">

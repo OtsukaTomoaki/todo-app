@@ -12,7 +12,7 @@ from todoback.settings import SECRET_KEY;
 UserModel = get_user_model()
 class UserCredentialAuthentication(BaseAuthentication):
     def authenticate(self, request):
-        username = request._request.POST.get("username")
+        username = request._request.POST.get("email")
         password = request._request.POST.get("password")
         print(username, password)
         user_obj = UserModel.objects.filter(email=username).first()

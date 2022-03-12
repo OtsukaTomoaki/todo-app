@@ -13,6 +13,7 @@ import { AccountMultiCheckBox, TodoStatusMultiCheckBox } from '../components/Mul
 
 import { validateToken } from "../common/signinUserProvider";
 import { todoStatus as initialTodoStatus } from "../common/todoStatusProvider";
+import { SignUp } from "./SignUp";
 
 const RouterApp = () => {
     //アカウント一覧
@@ -42,6 +43,22 @@ const RouterApp = () => {
                 <Routes>
                     <Route exact path="/home" element={<Home events={{ events }} setEventsDetail={setShowEventsDetail} accounts={accountList} todoList={todoList} addTodo={addTodoListItem} updateTodo={updateTodoListItem} deleteTodo={deleteTodoListItem} />} />
                 </Routes>
+                <Routes>
+                    <Route exact path="/signin" element={ <SignIn nextUrl="/home" />} />
+                </Routes>
+            </BrowserRouter>
+        </>
+    );
+};
+
+const AnounymouseRouterApp = () => {
+    return (
+        <>
+            <BrowserRouter>
+                <Routes>
+                    <Route exact path="/signin" element={ <SignIn nextUrl="/home" />} />
+                    <Route exact path="/signup" element={ <SignUp nextUrl="/home" />} />
+                </Routes>
             </BrowserRouter>
         </>
     );
@@ -52,7 +69,7 @@ function App() {
     return (
         <div className="App">
             {
-                has_auth ? <RouterApp /> : <SignIn nextUrl="/home" />
+                has_auth ? <RouterApp /> : <AnounymouseRouterApp />
             }
         </div>
     );
