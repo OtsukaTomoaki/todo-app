@@ -1,13 +1,13 @@
 import Modal from "react-modal";
+import ErrorIcon from '@mui/icons-material/Error';
 import { CloseButton } from "./Button";
 
 Modal.setAppElement("#root");
-
-export const ModalDialog = ({ isShow, toggleShow, form }) => {
+export const ErrorDialog = ({ message, isShow, setIsShow }) => {
     return (
         <Modal
             isOpen={isShow}
-            onRequestClose={() => toggleShow(false)}
+            onRequestClose={() => setIsShow(false)}
             overlayClassName={{
                 base: "overlay-base",
                 afterOpen: "overlay-after",
@@ -15,14 +15,14 @@ export const ModalDialog = ({ isShow, toggleShow, form }) => {
             }}
             className={{
                 base: "dialog-content-base",
-                afterOpen: "dialog-content-after",
+                afterOpen: "dialog-content-after_min",
                 beforeClose: "dialog-content-before"
             }}
             closeTimeoutMS={500}
         >
-            <CloseButton onClick={() => toggleShow(false)} />
-            {form}
-            {/* <button onClick={() => toggleShow(false)}>Close Modal</button> */}
+            <CloseButton  onClick={() => setIsShow(false)} />
+            <ErrorIcon />
+            {message}
         </Modal>
     );
 }

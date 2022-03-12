@@ -44,12 +44,13 @@ const Form = ({ control, accounts }) => {
             <Controller
                 control={control}
                 name="days_required"
+                min="2"
+
                 render={({ field }) => (
                     <TextField
                         {...field}
                         label="所要日数"
                         margin="normal"
-                        placeholder="所要日数"
                         style={SmallTextStyle}
                         required
                         type="number"
@@ -57,7 +58,6 @@ const Form = ({ control, accounts }) => {
                             shrink: true,
                         }}
                     />
-
                 )}
             />
             <Controller
