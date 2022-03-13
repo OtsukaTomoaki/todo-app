@@ -8,11 +8,11 @@ import '../static/App.css';
 import { useTodo } from "../hooks/useTodo";
 import { useAccounts } from '../hooks/useAccounts';
 import { useEvents } from "../hooks/useEvents";
+import { useTodoStatus } from "../hooks/useTodoStatus";
 import { BugerMenu } from '../components/BurgerMenu';
 import { AccountMultiCheckBox, TodoStatusMultiCheckBox } from '../components/MultiCheckBox';
 
 import { validateToken } from "../common/signinUserProvider";
-import { todoStatus as initialTodoStatus } from "../common/todoStatusProvider";
 import { SignUp } from "./SignUp";
 
 const RouterApp = () => {
@@ -21,7 +21,7 @@ const RouterApp = () => {
     const accountsBugerItem = AccountMultiCheckBox(accountList, setAccountList);
 
     //todoのステータス一覧
-    const [todoStatus, setTodoStatus] = useState(initialTodoStatus);
+    const {todoStatus, setTodoStatus} = useTodoStatus();
     const todoStatusBugerItem = TodoStatusMultiCheckBox(todoStatus, setTodoStatus);
 
     //todoの一覧
