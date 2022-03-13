@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link } from '@mui/material';
 import { SignInForm } from "../components/SignForm";
 import { Typing } from "../components/Typing";
-import { ErrorDialog } from "../components/ErrorDialog";
+import { ErrorDialog } from "../components/Dialog";
 import { getTokenFromLocalStorage, removeTokenToLocalStorage } from "../common/webStorage";
 
 export const SignIn = ({ nextUrl }) => {

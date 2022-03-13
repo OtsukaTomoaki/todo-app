@@ -212,6 +212,20 @@ Note: Beware of modifying this element as it can break the animations - you shou
   background: rgba(0, 0, 0, 0.3);
 }
 
+/* Notification */
+.notification-count {
+  position: absolute;
+  background-color: #c7243a;
+  left: 0;
+  top: 0;
+  line-height: 16px;
+  vertical-align: middle;
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  text-align: center;
+  border-radius: 50%;
+}
 /* ModalDialog */
 .overlay-base {
   padding: 1rem;
@@ -267,6 +281,14 @@ Note: Beware of modifying this element as it can break the animations - you shou
   max-width: 800px;
   height: 90%;
   background-color: white;
+}
+
+.dialog-content-after_info {
+  width: 70%;
+  max-width: 600px;
+  height: 100px;
+  background-color: white;
+  color: #005b99;
 }
 
 .dialog-content-after_error {

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link } from '@mui/material';
 import { SignUpForm } from "../components/SignForm";
 import { Typing } from "../components/Typing";
-import { ErrorDialog } from "../components/ErrorDialog";
+import { ErrorDialog } from "../components/Dialog";
 
 export const SignUp = ({ nextUrl }) => {
     const [isShow, setIsShow] = useState(false);

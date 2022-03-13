@@ -1,22 +1,31 @@
-import React from "react";
+import { useState } from "react";
 import { slide as Menu } from "react-burger-menu";
 import LogoutIcon from '@mui/icons-material/Logout';
 import Button from '@material-ui/core/Button';
 import CircleNotificationsIcon from '@mui/icons-material/CircleNotifications';
-
+import { InfoDialog } from "./Dialog";
 import { removeTokenToLocalStorage } from "../common/webStorage";
 
 export const BugerMenu = ({ accountCheckItems, todoStatusCheckItems, notifications, showNotification }) => {
-    const onNotificationClick = () => {
-        showNotification(notifications, 0);
-    }
+    const [isDialogShow, setIsDialogShow] = useState(false);
 
+    //お知らせボタンクリック
+    const onNotificationClick = () => {
+        if(notifications.length){
+            showNotification(notifications, 10);
+        } else {
+            setIsDialogShow(true);
+        }
+    }
+    //サインアウトボタンクリック
     const handleSignOut = () => {
+        //認証情報を削除して、サインイン画面にリダイレクトする
         removeTokenToLocalStorage();
         window.location.href = '/signin';
     };
     return (
         <div className="buger-menu-wrap">
+            <InfoDialog message="新規のお知らせはありません。" isShow={isDialogShow} setIsShow={setIsDialogShow} />
             <Menu width={450}>
                 <div className="buger-menu-content">
                     <label className="buger-menu-content-title">表示するメンバー</label>
@@ -39,6 +48,7 @@ export const BugerMenu = ({ accountCheckItems, todoStatusCheckItems, notificatio
             <div className="header-left-item">
                 <span>
                 <Button onClick={onNotificationClick} color='inherit' type="button">
+                    { notifications.length > 0 ? <span className="notification-count">{notifications.length}</span> : <></>}
                     <CircleNotificationsIcon />
                     お知らせ
                 </Button>                
