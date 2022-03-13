@@ -57,7 +57,7 @@ class TodoAPIView(APIView):
         update_end_date = not is_done and request.data['state'] == 'DONE';
         if todo_serializer.is_valid():
             if update_end_date:
-                todo_serializer.save(end_date=datetime.datetime.now())
+                todo_serializer.save()
             else:
                 todo_serializer.save(
                     end_date=(
