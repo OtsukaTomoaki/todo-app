@@ -1,15 +1,15 @@
 import { useState, useEffect } from 'react';
+import TaskIcon from '@mui/icons-material/Task';
+import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
+import { DefaultButton } from '../components/Button';
 
-const NOTIFICATION_AUTO_DISMISS = 10;
+const NOTIFICATION_AUTO_DISMISS = 5;
 const NOTIFICATION_LEVEL_WARNING = 'warning';
 
-export const useNotification = (todoList, accounts) => {
+export const useNotification = (todoList, accounts, onClick) => {
+
     const [ notification, setNotification ] = useState([]);
-    //担当者名の取得
-    const findEngagedAccount = (id) => {
-        const engagedAccount = accounts.find((account) => account.id === id);
-        return engagedAccount.username;
-    }
+
     useEffect(() => {
         const today = new Date().toISOString().split('T')[0];
         //お知らせに表示する対象となり得るTodoの一覧を絞り込み
@@ -21,12 +21,11 @@ export const useNotification = (todoList, accounts) => {
         const notificationDelay = notificationEvents
             .filter((todo => todo.end_date < today))
             .map((todo) => {
-                return {
-                    title: '遅延しているTODOがあります。',
-                    message: `${todo.title} / ${findEngagedAccount(todo.engaged_user_id)}`,
-                    level: NOTIFICATION_LEVEL_WARNING,
-                    autoDismiss: NOTIFICATION_AUTO_DISMISS
-                };
+                return GenerateNotificationItem(
+                    '遅延しているTODOがあります。', 
+                    todo, 
+                    accounts,
+                    onClick);
             });
         //メンバーのFiveFinger値が低いTodoの一覧
         const notificationUpset = notificationEvents
@@ -36,14 +35,50 @@ export const useNotification = (todoList, accounts) => {
                 return (startDate <= today && today <= endDate　 && todo.five_finger === 1);
             }))
             .map((todo) => {
-                return {
-                    title: 'メンバーが困っているTODOがあります。',
-                    message: `${todo.title} / ${findEngagedAccount(todo.engaged_user_id)}`,
-                    level: NOTIFICATION_LEVEL_WARNING,
-                    autoDismiss: NOTIFICATION_AUTO_DISMISS
-                };
+                return GenerateNotificationItem(
+                    'メンバーが困っているTODOがあります。', 
+                    todo, 
+                    accounts,
+                    onClick);
             });
         setNotification([...notificationDelay, ...notificationUpset]);
     }, [todoList]);
-    return { notification, setNotification };
+
+    //お知らせの再表示
+    const showNotification = (notifications, autoDismiss) => {
+        const newNotification = notifications.map((notification) => {
+            return {...notification, autoDismiss}
+        })
+        setNotification(newNotification);
+    };
+    return { notification, setNotification, showNotification };
 };
+
+const GenerateNotificationItem = (title, todo, accounts, onClick) => {
+    return {
+        title: title,
+        level: NOTIFICATION_LEVEL_WARNING,
+        autoDismiss: NOTIFICATION_AUTO_DISMISS,
+        children: (NotificationItem(todo, accounts, onClick))
+    };
+};
+
+const NotificationItem = (todo, accounts, onClick) => {
+    const clickHandler = () => {
+        onClick(todo);
+    };
+    return (
+        <div>
+            <div>
+                {`${todo.title} / ${findEngagedAccount(todo.engaged_user_id, accounts)}`}
+            </div>
+            <DefaultButton text='詳細' onClick={clickHandler}/>
+        </div>
+    );
+};
+
+//担当者名の取得
+const findEngagedAccount = (id, accounts) => {
+    const engagedAccount = accounts.find((account) => account.id === id);
+    return engagedAccount.username;
+}

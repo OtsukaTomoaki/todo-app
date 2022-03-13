@@ -13,7 +13,8 @@ import { useTodoStatus } from "../hooks/useTodoStatus";
 import { BugerMenu } from '../components/BurgerMenu';
 import { AccountMultiCheckBox, TodoStatusMultiCheckBox } from '../components/MultiCheckBox';
 import { Notification } from "../components/Notification";
-
+import { ModalDialog } from "../components/ModalDialog";
+import { UpdateTodoForm } from "../components/TodoForm";
 import { validateToken } from "../common/signinUserProvider";
 import { SignUp } from "./SignUp";
 
@@ -39,10 +40,19 @@ const RouterApp = () => {
     const { events, setEvents } = useEvents(accountList, todoList, todoStatus, showEventsDetail);
 
     //お知らせの一覧
-    const { notification, setNotification } = useNotification(todoList, accountList);
+    const [showNotifyModal, setShowNotifyModal] = useState(false);
+    const [notifyForm, setNotifyForm] = useState(<></>);
+    const showUpdateForm = (todo) => {
+        const form = <UpdateTodoForm accounts={accountList} toggleShow={setShowNotifyModal} updateTodo={updateTodoListItem} deleteTodo={deleteTodoListItem} todo={todo}/>;
+        setNotifyForm(form);
+        setShowNotifyModal(true);
+    };
+    const { notification, setNotification, showNotification } = useNotification(todoList, accountList, showUpdateForm);
+
     return (
         <>
-            <BugerMenu accountCheckItems={accountsBugerItem} todoStatusCheckItems={todoStatusBugerItem}/>
+            <ModalDialog isShow={showNotifyModal} toggleShow={setShowNotifyModal} form={notifyForm}/>
+            <BugerMenu accountCheckItems={accountsBugerItem} todoStatusCheckItems={todoStatusBugerItem} notifications={notification} showNotification={showNotification}/>
             <Notification notifications={notification}/>
             <BrowserRouter>
                 <Routes>
@@ -70,6 +80,7 @@ const AnounymouseRouterApp = () => {
 };
 
 function App() {
+    //jwtの有無でルーティングを分ける
     const has_auth = validateToken();
     return (
         <div className="App">
