@@ -16,12 +16,14 @@ export const useEvents = (accountList, todoList, todoStatus, showEventsDetail) =
         }).map((v) => {
             //カレンダーで読み込める形式にする
             const eventColor = selectedAccounts.find((account) => account.id === v.engaged_user_id).color;
+            const startDate = v.start_date.split('T')[0];
+            const endDate = v.end_date.split('T')[0];;
             return {
                 id: v.id,
-                title: showEventsDetail ? generateEventTitleDetail(v, selectedTodoStatus, selectedAccounts) : generateEventTitle(v),
+                title: showEventsDetail ? generateEventTitleDetail(v, selectedTodoStatus, selectedAccounts) : generateEventTitle(v, selectedAccounts),
                 description: v.memo,
-                start: v.start_date.split('T')[0],
-                end: v.end_date.split('T')[0],
+                start: startDate,
+                end: endDate,
                 backgroundColor: eventColor,
                 borderColor: eventColor,
                 editable: false
@@ -32,8 +34,45 @@ export const useEvents = (accountList, todoList, todoStatus, showEventsDetail) =
     return {events, setEvents};
 };
 
-function generateEventTitle(todo) {
-    const detailTitle = `${findFiveFingerIcon(todo.five_finger)} ${todo.title}`;
+
+function countHoriday(start, diffDays) {
+
+    const [startY, startM, startD] = start.split('-');
+    const startDate = new Date(startY, startM, startD); 
+
+    let addDays = 0;
+    for(let i = 1; i < diffDays; i++) {
+        startDate.setDate(startDate.getDate() + i);
+        const dayIndex = startDate.getDay();
+        console.log(startDate, startDate.getDate(), dayIndex);
+        if (dayIndex === 0) {
+            addDays += 1;
+            i = i + 4;
+        } else if (dayIndex === 6) {
+            addDays += 2;
+            i = i + 2;
+        } else {
+            console.log('dayIndex', dayIndex, (5 - dayIndex), i)
+            i = i + (5 - dayIndex); 
+        }
+    } 
+    console.log(start, diffDays, startDate, addDays);
+
+    return addDays;
+}
+
+function addDay(current, addCount) {
+    const [startY, startM, startD] = current.split('-');
+    const currentDate = new Date(startY, startM, startD);
+    const endDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() + addCount + 1);
+
+    const result = `${endDate.getFullYear()}-${endDate.getMonth().toString().padStart(2, '0')}-${endDate.getDate().toString().padStart(2, '0')}`;
+    console.log('addDay', current, addCount, endDate, result);
+    return result;
+}
+
+function generateEventTitle(todo, selectedAccounts) {
+    const detailTitle = `${findFiveFingerIcon(todo.five_finger)} ${todo.title}　${selectedAccounts.find((account)=>account.id === todo.engaged_user_id).username}`;
     return detailTitle;
 }
 

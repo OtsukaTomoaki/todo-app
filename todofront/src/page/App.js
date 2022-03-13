@@ -8,9 +8,11 @@ import '../static/App.css';
 import { useTodo } from "../hooks/useTodo";
 import { useAccounts } from '../hooks/useAccounts';
 import { useEvents } from "../hooks/useEvents";
+import { useNotification } from "../hooks/useNotification";
 import { useTodoStatus } from "../hooks/useTodoStatus";
 import { BugerMenu } from '../components/BurgerMenu';
 import { AccountMultiCheckBox, TodoStatusMultiCheckBox } from '../components/MultiCheckBox';
+import { Notification } from "../components/Notification";
 
 import { validateToken } from "../common/signinUserProvider";
 import { SignUp } from "./SignUp";
@@ -36,9 +38,12 @@ const RouterApp = () => {
     //イベントの一覧
     const { events, setEvents } = useEvents(accountList, todoList, todoStatus, showEventsDetail);
 
+    //お知らせの一覧
+    const { notification, setNotification } = useNotification(todoList, accountList);
     return (
         <>
             <BugerMenu accountCheckItems={accountsBugerItem} todoStatusCheckItems={todoStatusBugerItem}/>
+            <Notification notifications={notification}/>
             <BrowserRouter>
                 <Routes>
                     <Route exact path="/home" element={<Home events={{ events }} setEventsDetail={setShowEventsDetail} accounts={accountList} todoList={todoList} addTodo={addTodoListItem} updateTodo={updateTodoListItem} deleteTodo={deleteTodoListItem} />} />
