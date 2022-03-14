@@ -1,79 +1,66 @@
 # todo-app
 
-todo管理アプリケーション
-進捗の確認やカイゼンジャーニーに記載のプロジェクト進行に必要なツールを持つ
-## todoback
-### 概要
+## URL
+https://bigmound26.com/home
+## 概要
 
-- バックエンド側のアプリケーション
-- Djangoで実装
+カレンダー形式でグループのTodoを管理します。
+カレンダーをダブルクリックすると新規にTodoを追加、
+カレンダー上のTodoをダブルクリックするとTodoを編集できます。
 
-- pip
-  - django
-  - routers
-  - djangorestframework
-  - djangorestframework-jwt
-  - django-filter
+Todoは書籍「カイゼンジャーニー」に記載のファイブフィンガーを取り入れています。
+ファイブフィンガーは自身の担当するタスクや自身の状態などYes, Noで表せないことを
+５段階の数値で表現します。
+これにより言いにくいことや不安に思っていることをメンバーに共有しやすくなります。
+## バックエンド
+### 言語、フレームワーク
 
-## todofront
-### 概要
+- Python
+- django
 
-- フロントエンド側のアプリケーション
-- Reactで実装
+### 機能
 
-## DB
+- JWTの発行、検証
+- アカウントの取得、追加
+- Todoの追加、取得、更新、削除
+### pip
 
-```plantuml
-@startuml
-!define MAIN_ENTITY #E2EFDA-C6E0B4
-!define MAIN_ENTITY_2 #FCE4D6-F8CBAD
+  asgiref==3.5.0
+  backports.zoneinfo==0.2.1
+  Django==4.0.2
+  django-cors-headers==3.11.0
+  django-environ==0.8.1
+  django-filter==21.1
+  djangorestframework==3.13.1
+  djangorestframework-jwt==1.11.0
+  PyJWT==1.7.1
+  pytz==2021.3
+  routers==0.10.1
+  six @ file:///AppleInternal/BuildRoot/Library/Caches/com.apple.xbs/Sources/python3/python3-103/six-1.15.0-py2.py3-none-any.whl
+  sqlparse==0.4.2
+  uWSGI==2.0.20
 
-!define METAL #F2F2F2-D9D9D9
-!define MASTER_MARK_COLOR AAFFAA
-!define TRANSACTION_MARK_COLOR FFAA00
+## フロントエンド
 
-entity m_projects <<M,TRANSACTION_MARK_COLOR>> {
-  +guid: char(32) [PK]
-  title: varchar(60)
-  start_date: datetime
-  end_date: datetime
-  description: varchar(400)
-  created_at : datetime
-  created_by : varchar
-}
+### 言語、フレームワーク
 
-entity accounts <<M,TRANSACTION_MARK_COLOR>> {
+- JavaScript
+- React
+### 機能
 
+- サインイン、サインアップ
+- Todoの追加、取得、更新、削除
+- 遅延したTodo、ファイブフィンガーが低いメンバーの通知
 
-} 
+## インフラ
 
-entity t_todo <<T, TRANSACTION_MARK_COLOR>> {
-    + guid_projects : char(32) 
-    + guid_todo : char(32) 
-    title : varchar(60)
-    created_at : datetime
-    created_by : varchar
-    memo: varchar(4000)
-}
+### クラウド
 
-entity t_todo_histories <<T, TRANSACTION_MARK_COLOR>> {
-    + guid_todo : char(32) 
-    + seq_histories : number
-    day : number
-    created_at : datetime
-    created_by : varchar
-    responsible_by : varchar
-    start_date : datetime
-    end_date : datetime
-    state : 1( 0: icebox, 1: to, 2: do, 3: done) 
-    memo: varchar(4000)   
-}
+- AWS
+- EC2
+- ALB
+- ACM
+- Route53
+### ルーティング
 
-entity t_todo_comments <<T, TRANSACTION_MARK_COLOR>> {
-    + guid_todo : char(32) 
-    + seq_history : number
-    day : number
-}
-
-@enduml 
-```
+- nginx
