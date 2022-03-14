@@ -27,7 +27,7 @@ export const useAccounts = () => {
                 //ユーザを表示する際の色を割り当てる
                 const colorIndex = i % colorKeys.length;
                 const userColor = colors[colorKeys[colorIndex]];
-                const prevStorageVal = prevSelectedList.find((storage) => storage.id === account.id);
+                const prevStorageVal = prevSelectedList?.find((storage) => storage.id === account.id);
                 account['selected'] = prevStorageVal ? prevStorageVal.selected : true;
                 account['color'] = userColor;
                 return account;
