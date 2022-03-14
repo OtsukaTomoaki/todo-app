@@ -1,7 +1,8 @@
 # todo-app
 
 ## URL
-https://bigmound26.com/home
+
+https://bigmound26.com/signin
 ## 概要
 
 カレンダー形式でグループのTodoを管理します。
