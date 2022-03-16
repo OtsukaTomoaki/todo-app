@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import TaskIcon from '@mui/icons-material/Task';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import { DefaultButton } from '../components/Button';
+import { GetDateTimeToday } from '../common/DateProvider';
 
 const NOTIFICATION_AUTO_DISMISS = 5;
 const NOTIFICATION_LEVEL_WARNING = 'warning';
@@ -11,7 +12,7 @@ export const useNotification = (todoList, accounts, onClick) => {
     const [ notification, setNotification ] = useState([]);
 
     useEffect(() => {
-        const today = new Date().toISOString().split('T')[0];
+        const today = GetDateTimeToday();
         //お知らせに表示する対象となり得るTodoの一覧を絞り込み
         const notificationEvents = todoList.filter(todo => {
             const startDate = todo.start_date.split('T')[0];
@@ -19,7 +20,7 @@ export const useNotification = (todoList, accounts, onClick) => {
         });
         //遅延しているTodoの一覧
         const notificationDelay = notificationEvents
-            .filter((todo => todo.end_date < today))
+            .filter((todo => todo.end_date.split('T')[0] < today))
             .map((todo) => {
                 return GenerateNotificationItem(
                     '遅延しているTODOがあります。', 
