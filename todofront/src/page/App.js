@@ -73,6 +73,7 @@ const AnounymouseRouterApp = () => {
                 <Routes>
                     <Route exact path="/signin" element={ <SignIn nextUrl="/home" />} />
                     <Route exact path="/signup" element={ <SignUp nextUrl="/home" />} />
+                    <Route exact path="*" element={ <SignIn nextUrl="/home" />} />
                 </Routes>
             </BrowserRouter>
         </>
