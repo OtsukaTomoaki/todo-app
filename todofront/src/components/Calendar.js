@@ -6,14 +6,15 @@ import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import listPlugin from '@fullcalendar/list';
 import ReactTooltip from 'react-tooltip'
+import { isMobile } from "react-device-detect"
 
 export const Calendar = ({ events, setEventsDetail, eventsClickHandler, dateClickHandler }) => {
-
+    const initialView = !isMobile ? "dayGridMonth" : "listMonth";
     return (
         <>
             <FullCalendar
                 plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin, listPlugin]}
-                initialView="dayGridMonth"
+                initialView={initialView}
                 headerToolbar={{
                     left: 'prev,next',
                     center: 'title',

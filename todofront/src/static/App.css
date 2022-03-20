@@ -65,6 +65,12 @@ body {/*要修正*/
   background-color: white;
 }
 
+.form-wrap {
+  width: 60%;
+  min-width: 500px;
+  display: flex; 
+}
+
 .front-app-title {
   font-size: 30px;
   font-weight: 600;
@@ -78,8 +84,17 @@ body {/*要修正*/
 .sign-up-link {
   margin-top: 50px;
 }
+/* home */
+.home-wrap {
+  margin: 5px 5px 0 5px;
+}
 
 /* Calendar */
+.fc-toolbar-title {
+  font-size: 20px !important;
+  font-weight: 800 !important;
+}
+
 .calendar-wrap {
   margin: 5px 5px 0 5px;
   background-color: #fff;
@@ -103,7 +118,7 @@ td.fc-day-sun {
 .header-app-name {
   color: white;
   float: left;
-  margin-left: 80px;
+  margin-left: 55px;
   margin-top: 10px;
   font-weight: 800;
   font-size: 20px; 
@@ -114,13 +129,12 @@ td.fc-day-sun {
   float: right;
   margin-top: 10px;
 }
-
 /* Position and sizing of burger button */
 .bm-burger-button {
   position: absolute;
   width: 24px;
   height: 20px;
-  left: 36px;
+  left: 16px;
   top: 16px;
 }
 
@@ -216,6 +230,34 @@ Note: Beware of modifying this element as it can break the animations - you shou
 .bm-overlay {
   background: rgba(0, 0, 0, 0.3);
 }
+
+
+@media screen and (max-width: 481px) {
+  .home-wrap {
+    height: 90vh;
+  }
+  .header-app-name {
+    font-size: 14px;
+    margin-top: 16px;
+  }
+  .header-left-item span {
+    font-size: 10px;
+  }
+  .fc-media-screen {
+    height: 100%;
+  }
+  .fc-toolbar {
+    visibility: hidden;
+    position: absolute;
+  }
+  .fc-toolbar-title {
+    font-size: 14px !important;
+  }
+  .bm-menu-wrap {
+    max-width: 95%;
+  }
+}
+
 
 /* Notification */
 .notification-count {
