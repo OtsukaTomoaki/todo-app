@@ -94,6 +94,11 @@ td.fc-day-sun {
   display:none;
 }
 
+/* イベント上のツールチップ */
+.events-tooltip span{
+  text-align: left !important;
+}
+
 /* BugerMenu */
 .header-app-name {
   color: white;

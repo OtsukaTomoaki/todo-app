@@ -16,12 +16,15 @@ export const useEvents = (accountList, todoList, todoStatus, showEventsDetail) =
         }).map((v) => {
             //カレンダーで読み込める形式にする
             const eventColor = selectedAccounts.find((account) => account.id === v.engaged_user_id).color;
+            const engagedAccount = findEngagedAccount(v, selectedAccounts);
             const startDate = v.start_date.split('T')[0];
-            const endDate = v.end_date.split('T')[0];;
+            const endDate = v.end_date.split('T')[0];
+            const statusText = selectedTodoStatus.find((s) => s.id === v.state).text;
+            const fiveFinger = findFiveFingerIcon(v.five_finger);
             return {
                 id: v.id,
-                title: showEventsDetail ? generateEventTitleDetail(v, selectedTodoStatus, selectedAccounts) : generateEventTitle(v, selectedAccounts),
-                description: v.memo,
+                title: showEventsDetail ? generateEventTitleDetail(v, statusText, engagedAccount, fiveFinger) : generateEventTitle(v, engagedAccount, fiveFinger),
+                description: generateEventDescription(v, statusText, engagedAccount, fiveFinger),
                 start: startDate,
                 end: endDate,
                 backgroundColor: eventColor,
@@ -35,52 +38,30 @@ export const useEvents = (accountList, todoList, todoStatus, showEventsDetail) =
 };
 
 
-function countHoriday(start, diffDays) {
-
-    const [startY, startM, startD] = start.split('-');
-    const startDate = new Date(startY, startM, startD); 
-
-    let addDays = 0;
-    for(let i = 1; i < diffDays; i++) {
-        startDate.setDate(startDate.getDate() + i);
-        const dayIndex = startDate.getDay();
-        console.log(startDate, startDate.getDate(), dayIndex);
-        if (dayIndex === 0) {
-            addDays += 1;
-            i = i + 4;
-        } else if (dayIndex === 6) {
-            addDays += 2;
-            i = i + 2;
-        } else {
-            console.log('dayIndex', dayIndex, (5 - dayIndex), i)
-            i = i + (5 - dayIndex); 
-        }
-    } 
-    console.log(start, diffDays, startDate, addDays);
-
-    return addDays;
-}
-
-function addDay(current, addCount) {
-    const [startY, startM, startD] = current.split('-');
-    const currentDate = new Date(startY, startM, startD);
-    const endDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() + addCount + 1);
-
-    const result = `${endDate.getFullYear()}-${endDate.getMonth().toString().padStart(2, '0')}-${endDate.getDate().toString().padStart(2, '0')}`;
-    console.log('addDay', current, addCount, endDate, result);
-    return result;
-}
-
-function generateEventTitle(todo, selectedAccounts) {
-    const detailTitle = `${findFiveFingerIcon(todo.five_finger)} ${todo.title}　${selectedAccounts.find((account)=>account.id === todo.engaged_user_id).username}`;
+function generateEventTitle(todo, account, fiveFinger) {
+    const detailTitle = `${fiveFinger.icon} ${todo.title}　${account.username}`;
     return detailTitle;
 }
 
-function generateEventTitleDetail(todo, selectedStatus, selectedAccounts) {
-    const detailTitle = `${todo.title} (${selectedStatus.find((s) => s.id === todo.state).text}) ${findFiveFingerIcon(todo.five_finger)} ${selectedAccounts.find((account)=>account.id === todo.engaged_user_id).username}`;
+//イベントの詳細表示(カレンダーのツールチップで表示)
+function generateEventDescription(todo, statusText, account, fiveFinger) {
+    const description = 
+    `タイトル：${todo.title}<br />
+    担当者：${account.username}<br />
+    進捗：${statusText}<br />
+    ファイブフィンガー：${fiveFinger.text}${fiveFinger.icon}`;
+    return description;
+}
+
+function findEngagedAccount(todo, accounts) {
+    return accounts.find((account)=>account.id === todo.engaged_user_id);
+}
+
+function generateEventTitleDetail(todo, statusText, account, fiveFinger) {
+    const detailTitle = `${todo.title} (${statusText}) ${fiveFinger.icon} ${account.username}`;
     return detailTitle;
 }
 
 function findFiveFingerIcon(id) {
-    return fiveFinger.find((v) => v.id === id).icon;
+    return fiveFinger.find((v) => v.id === id);
 }

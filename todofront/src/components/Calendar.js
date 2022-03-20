@@ -1,9 +1,11 @@
-import React from "react";
-import FullCalendar from '@fullcalendar/react';
+import { useState, useEffect } from 'react';
+import ReactDOM from 'react-dom';
+import FullCalendar, { EventContentArg } from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import listPlugin from '@fullcalendar/list';
+import ReactTooltip from 'react-tooltip'
 
 export const Calendar = ({ events, setEventsDetail, eventsClickHandler, dateClickHandler }) => {
 
@@ -23,7 +25,14 @@ export const Calendar = ({ events, setEventsDetail, eventsClickHandler, dateClic
                 nowIndicator={true}
                 dateClick={dateClickHandler}
                 eventClick={eventsClickHandler}
-                eventDidMount={(e) => {
+                eventContent={(e) => {
+                    const title = e.event.title;
+                    const description = e.event.extendedProps.description;
+                    return (
+                    <div data-tip={description}>   
+                        {title}
+                        <ReactTooltip className="events-tooltip" effect="float" type="dark" place="right" multiline />
+                    </div>);
                 }}
                 viewDidMount={((e) => {
                     setEventsDetail(e.view.type === 'listMonth' || e.view.type === 'listDay');
