@@ -83,8 +83,10 @@ WSGI_APPLICATION = 'todoback.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': env('MYSQL_DBNAME'),
+        'USER': env('MYSQL_USER'),
+        'PASSWORD': env('MYSQL_PASSWORD')
     }
 }
 
@@ -137,6 +139,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # django-cors-headers
 CORS_ORIGIN_WHITELIST = [
     "http://localhost:3000",
+    "https://bigmound26.com"
 ]
 if DEBUG is True:
     CORS_ALLOW_ALL_ORIGINS = True
