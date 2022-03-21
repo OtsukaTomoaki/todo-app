@@ -9,7 +9,7 @@ axios.defaults.baseURL = API_BASEURL;
 axios.defaults.headers.common["Authorization"] = API_TOKEN;
 
 export const getAllTodoData = async () => {
-    const response = await axios.get(API_BASEURL);
+    const response = await axios.get(`${API_BASEURL}/`);
     return response.data;
 };
 
